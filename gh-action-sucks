@@ -1,0 +1,24 @@
+# Second time in two days, that GH actions docu does NOT match the behavior!
+
+You can't call a local action like explained in:
+# https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#example-using-an-action-in-the-same-repository-as-the-workflow
+
+<quote>
+Example: Using an action in the same repository as the workflow
+
+./path/to/dir
+
+The path to the directory that contains the action in your workflow's repository. You must check out your repository before using the action.
+
+jobs:
+  my_first_job:
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Use local my-action
+        uses: ./.github/actions/my-action
+</quote>
+
+
+You can´t set env variables with punctuation, preciesly: 
+- you can do so, but they woun't get echoed, though they exist in GH action context
