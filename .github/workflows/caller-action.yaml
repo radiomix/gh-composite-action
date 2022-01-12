@@ -27,6 +27,8 @@ jobs:
         uses:  radiomix/gh-composite-action/.github/composite/action.yaml@main
         with:
           fileName: 'caller-date-file.txt'
+
+      - name: Log output
         run: |
           echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
           ls -la
