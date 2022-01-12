@@ -1,0 +1,23 @@
+#
+#
+# Source:
+#  - https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+#  - https://dev.to/n3wt0n/github-composite-actions-nest-actions-within-actions-3e5l
+# Purpose: call a composite action created by ourself
+#
+name: Composite Example
+
+on: [workflow_dispatch]
+
+jobs:
+  copy_files_job:
+    runs-on: ubuntu-latest
+    name: A job that copy files
+    steps:
+    - uses: actions/checkout@v2
+    - id: myCompositeAction
+      uses: radiomix/gh-composite-action@v1
+      with:
+        destinationFolder: '/whatever/folder'
+    - run: echo Files copied ${{ steps.myCompositeAction.outputs.copied-files }}
+      shell: bash
