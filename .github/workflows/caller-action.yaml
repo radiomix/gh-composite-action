@@ -27,10 +27,12 @@ jobs:
         echo " Calling radiomix/gh-composite-action/.github/actions@main"
         echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
         ls -la
-        cat ${{ call-composite-action.fileName}}
-
+        cat caller-date-file.txt
+        git status
       shell: bash
 
+    #### NOT WORKING althoug docu says YES:
+    #### https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#example-using-an-action-in-the-same-repository-as-the-workflow
     # - name: Call local action
     #   # https://github.community/t/path-to-action-in-the-same-repository-as-workflow/16952/2
     #   # ERROR: the `uses' attribute must be a path, a Docker image, or owner/repo@ref
