@@ -10,26 +10,17 @@ name: Composite Example
 on: [workflow_dispatch]
 
 jobs:
-  create_files_job:
+  copy_files_job:
     runs-on: ubuntu-latest
     name: Call action.yaml
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+    - id: myCompositeAction
+      uses: radiomix/gh-composite-action@main
 
-      - name: Cache local Maven repository
-        # From https://github.com/actions/cache/blob/main/examples.md#java---maven
-        uses: actions/cache@v2
-
-      - name: Call composite action
-        id: myCompositeAction
-        # the `uses' attribute must be a path, a Docker image, or owner/repo@ref
-        uses:  radiomix/gh-composite-action/.github/composite/action.yaml@main
-        with:
-          fileName: 'caller-date-file.txt'
-
-      - name: Log output
-        run: |
-          echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
-          ls -la
-        shell: bash
+      with:
+        fileName: 'caller-date-file.txt'
+    - run: |
+        echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
+        ls -la
+      shell: bash
