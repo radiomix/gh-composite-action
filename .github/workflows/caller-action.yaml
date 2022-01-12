@@ -16,9 +16,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - id: myCompositeAction
-
       # the `uses' attribute must be a path, a Docker image, or owner/repo@ref
-      uses: .github/composite
+      uses:  radiomix/gh-composite-action/.github/composite/action.yaml@main
       with:
         fileName: 'caller-date-file.txt'
     - run: |
