@@ -20,6 +20,8 @@ jobs:
       uses: radiomix/gh-composite-action./.github/actions/composite@main
       with:
         fileName: 'caller-date-file.txt'
+
+    - name: Log composite action
       run: |
         echo " Calling radiomix/gh-composite-action./.github/actions/composite@main"
         echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
@@ -31,6 +33,8 @@ jobs:
       uses: .github/actions/composite
       with:
         fileName: 'caller-date-file.txt'
+
+    - name: Log local action
       run: |
         echo " Calling .github/actions/composite@main"
         echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
