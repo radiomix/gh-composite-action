@@ -16,7 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - id: myCompositeAction
-      uses: radiomix/gh-composite-action@main
+      uses: radiomix/gh-composite-action@v1.2
 
       with:
         fileName: 'caller-date-file.txt'

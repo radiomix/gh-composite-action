@@ -1,4 +1,4 @@
-# Reuse this composite GH action!
+# COMPOSITE GH ACTION EXAMPLE 
 name: 'Create a file'
 description: 'Creates a file in the root folder of the repo'
 inputs:
@@ -14,8 +14,5 @@ runs:
   using: "composite"
   steps:
   - id: date-generator
-    run: |
-      DATE=$(date)
-      echo $DATE > ${{ fileName }}
-      echo "::set-output name=date::$DATE"
+    run: echo "::set-output name=date::$(date)"
     shell: bash
