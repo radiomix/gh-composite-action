@@ -27,8 +27,8 @@ jobs:
         echo " Calling radiomix/gh-composite-action/.github/actions@main"
         echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
         ls -la
-        cat ${{ call-composite-action.fileName}}
-
+        cat caller-date-file.txt
+        git status
       shell: bash
 
     # - name: Call local action
