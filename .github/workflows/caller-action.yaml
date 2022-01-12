@@ -16,6 +16,7 @@ jobs:
       uses: actions/checkout@v1
 
     - name: Call composite action
+      id: call-composite-action
       # https://github.community/t/path-to-action-in-the-same-repository-as-workflow/16952/2
       uses: radiomix/gh-composite-action/.github/actions@main
       with:
@@ -26,6 +27,8 @@ jobs:
         echo " Calling radiomix/gh-composite-action/.github/actions@main"
         echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
         ls -la
+        cat ${{ call-composite-action.fileName}}
+
       shell: bash
 
     # - name: Call local action
