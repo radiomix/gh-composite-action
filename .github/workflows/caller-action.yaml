@@ -9,7 +9,7 @@ name: use composite action
 on: push
 
 jobs:
-  my_first_job:
+  run-composite-action:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -27,7 +27,7 @@ jobs:
         echo " Calling radiomix/gh-composite-action/.github/actions@main"
         echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
         ls -la
-        cat ${{ call-composite-action.fileName}}
+        cat ${{ call-composite-action.output.fileName}}
 
       shell: bash
 

@@ -13,6 +13,9 @@ outputs:
   fileContent:
     description: "content of the file"
     value: ${{ steps.date-generator.outputs.date }}
+  fileName:
+    description: "name of the file"
+    value: ${{ steps.date-generator.outputs.date }}
 
 runs:
   using: "composite"
@@ -22,4 +25,5 @@ runs:
       DATE=$(date)
       echo $DATE > ${{ inputs.fileName }}
       echo "::set-output name=date::$DATE"
+      echo "::set-output name=file::${{ inputs.fileName }}"
     shell: bash
