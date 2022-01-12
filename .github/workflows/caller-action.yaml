@@ -1,26 +1,38 @@
-#
+# Purpose call another action in the same repo
 #
 # Source:
 #  - https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
 #  - https://dev.to/n3wt0n/github-composite-actions-nest-actions-within-actions-3e5l
 # Purpose: call a composite action created by ourself
 #
-name: Composite Example
-
-on: [workflow_dispatch]
+name: use composite action
+on: push
 
 jobs:
-  copy_files_job:
+  my_first_job:
     runs-on: ubuntu-latest
-    name: Call action.yaml
     steps:
-    - uses: actions/checkout@v2
-    - id: myCompositeAction
-      uses: radiomix/gh-composite-action@v1.2
+    - name: Checkout
+      uses: actions/checkout@v1
 
+    - name: Call composite action
+      # https://github.community/t/path-to-action-in-the-same-repository-as-workflow/16952/2
+      uses: radiomix/gh-composite-action./.github/actions/composite@main
       with:
         fileName: 'caller-date-file.txt'
-    - run: |
+      run: |
+        echo " Calling radiomix/gh-composite-action./.github/actions/composite@main"
+        echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
+        ls -la
+      shell: bash
+
+    - name: Call local action
+      # https://github.community/t/path-to-action-in-the-same-repository-as-workflow/16952/2
+      uses: .github/actions/composite
+      with:
+        fileName: 'caller-date-file.txt'
+      run: |
+        echo " Calling .github/actions/composite@main"
         echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
         ls -la
       shell: bash

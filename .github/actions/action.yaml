@@ -1,0 +1,21 @@
+# Reuse this composite GH action!
+name: 'Create a file'
+description: 'Creates a file in the root folder of the repo'
+inputs:
+  fileName:  # name of the file to create
+    description: 'The file to create'
+    required: true
+    default: '~/date.txt'
+outputs:
+  fileContent:
+    description: "content of the file"
+    value: ${{ steps.date-generator.outputs.date }}
+runs:
+  using: "composite"
+  steps:
+  - id: date-generator
+    run: |
+      DATE=$(date)
+      echo $DATE > ${{ fileName }}
+      echo "::set-output name=date::$DATE"
+    shell: bash
