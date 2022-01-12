@@ -17,26 +17,26 @@ jobs:
 
     - name: Call composite action
       # https://github.community/t/path-to-action-in-the-same-repository-as-workflow/16952/2
-      uses: radiomix/gh-composite-action./.github/actions/composite@main
+      uses: radiomix/gh-composite-action./.github/actions/@main
       with:
         fileName: 'caller-date-file.txt'
 
     - name: Log composite action
       run: |
-        echo " Calling radiomix/gh-composite-action./.github/actions/composite@main"
+        echo " Calling radiomix/gh-composite-action./.github/actions/@main"
         echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
         ls -la
       shell: bash
 
     - name: Call local action
       # https://github.community/t/path-to-action-in-the-same-repository-as-workflow/16952/2
-      uses: .github/actions/composite
+      uses: .github/actions/
       with:
         fileName: 'caller-date-file.txt'
 
     - name: Log local action
       run: |
-        echo " Calling .github/actions/composite@main"
+        echo " Calling .github/actions/"
         echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
         ls -la
       shell: bash
