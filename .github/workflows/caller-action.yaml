@@ -16,8 +16,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - id: myCompositeAction
-      uses: radiomix/gh-composite-action@v1.2
+      uses: radiomix/gh-composite-action@v1.2st
+
       with:
         fileName: 'caller-date-file.txt'
-    - run: echo Files copied ${{ steps.myCompositeAction.outputs.copied-files }}
+    - run: |
+        echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
+        ls -la
       shell: bash
