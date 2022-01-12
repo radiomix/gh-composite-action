@@ -15,7 +15,9 @@ jobs:
     name: Call action.yaml
     steps:
     - uses: actions/checkout@v2
-    - id: myCompositeAction
+
+    - name: Call composite action
+      id: myCompositeAction
       # the `uses' attribute must be a path, a Docker image, or owner/repo@ref
       uses:  radiomix/gh-composite-action/.github/composite/action.yaml@main
       with:
