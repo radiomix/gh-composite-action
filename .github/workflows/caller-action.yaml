@@ -18,7 +18,7 @@ jobs:
     - id: myCompositeAction
 
       # the `uses' attribute must be a path, a Docker image, or owner/repo@ref
-      uses: .github/composite/action.yaml
+      uses: .github/composite
       with:
         fileName: 'caller-date-file.txt'
     - run: |
