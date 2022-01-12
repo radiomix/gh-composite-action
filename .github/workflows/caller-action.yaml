@@ -12,12 +12,12 @@ on: [workflow_dispatch]
 jobs:
   copy_files_job:
     runs-on: ubuntu-latest
-    name: A job that copy files
+    name: Call action.yaml
     steps:
     - uses: actions/checkout@v2
     - id: myCompositeAction
-      uses: radiomix/gh-composite-action@v1
+      uses: radiomix/gh-composite-action@v1.1
       with:
-        destinationFolder: '/whatever/folder'
+        fileName: 'caller-date-file.txt'
     - run: echo Files copied ${{ steps.myCompositeAction.outputs.copied-files }}
       shell: bash
