@@ -21,7 +21,7 @@ let runs_to_delete = [];
 
 for (const workflow of workflows) {
     for (let page = 0; page < pages; page += 1) {
-        let response = await octokit.actions.listWorkflowRuns({
+        let response = octokit.actions.listWorkflowRuns({
             owner: context.repo.owner,
             page: page,
             per_page: 100,
@@ -42,7 +42,7 @@ for (const workflow of workflows) {
 for (const run of runs_to_delete) {
     console.log(`Run id ${run[0]} of '${run[1]}' is older than ${days_to_expiration} days. Deleting...`);
     try {
-        await github.actions.deleteWorkflowRun({
+        octokit.actions.deleteWorkflowRun({
             owner: context.repo.owner,
             repo: context.repo.repo,
             run_id: run[0]

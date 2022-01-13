@@ -5,14 +5,14 @@
 const { Octokit } = require("@octokit/action");
 const octokit = new Octokit();
 
-const cancelled = await octokit.actions.listWorkflowRunsForRepo({
+const cancelled = octokit.actions.listWorkflowRunsForRepo({
     owner: context.repo.owner,
     per_page: 100,
     repo: context.repo.repo,
     status: 'cancelled',
 });
 
-const skipped = await octokit.actions.listWorkflowRunsForRepo({
+const skipped = octokit.actions.listWorkflowRunsForRepo({
     owner: context.repo.owner,
     per_page: 100,
     repo: context.repo.repo,
@@ -22,7 +22,7 @@ const skipped = await octokit.actions.listWorkflowRunsForRepo({
 for (const response of [cancelled, skipped]) {
     for (const run of response.data.workflow_runs) {
         console.log(`Run id ${run.id} of '${run.name}' is a cancelled/skipped run. Deleting...`);
-        await github.actions.deleteWorkflowRun({
+        octokit.actions.deleteWorkflowRun({
             owner: context.repo.owner,
             repo: context.repo.repo,
             run_id: run.id
