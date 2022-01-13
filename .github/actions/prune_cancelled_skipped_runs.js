@@ -2,14 +2,17 @@
 // Source: https://github.community/t/delete-old-workflow-results/16152/44
 // Setup: via GH actions
 
-const cancelled = await github.actions.listWorkflowRunsForRepo({
+const { Octokit } = require("@octokit/action");
+const octokit = new Octokit();
+
+const cancelled = await octokit.actions.listWorkflowRunsForRepo({
     owner: context.repo.owner,
     per_page: 100,
     repo: context.repo.repo,
     status: 'cancelled',
 });
 
-const skipped = await github.actions.listWorkflowRunsForRepo({
+const skipped = await octokit.actions.listWorkflowRunsForRepo({
     owner: context.repo.owner,
     per_page: 100,
     repo: context.repo.repo,

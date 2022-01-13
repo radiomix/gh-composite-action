@@ -2,6 +2,9 @@
 // Source: https://github.community/t/delete-old-workflow-results/16152/44
 // Setup: via GH actions
 
+const { Octokit } = require("@octokit/action");
+const octokit = new Octokit();
+
 const days_to_expiration = 30;
 const ms_in_day = 86400000;
 const now = Date.now();
@@ -18,7 +21,7 @@ let runs_to_delete = [];
 
 for (const workflow of workflows) {
     for (let page = 0; page < pages; page += 1) {
-        let response = await github.actions.listWorkflowRuns({
+        let response = await octokit.actions.listWorkflowRuns({
             owner: context.repo.owner,
             page: page,
             per_page: 100,
