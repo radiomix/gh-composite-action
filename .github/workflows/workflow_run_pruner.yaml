@@ -11,19 +11,40 @@ on:
 jobs:
  prune_old_runs:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      # Check out code using git
+      - uses: actions/checkout@v2
+      # Install Node 12
+      - uses: actions/setup-node@v1
+        with:
+          version: 12
+      - run: npm install @octokit/action
+      # Node.js script can be anywhere. A good convention is to put local GitHub Actions
+      # into the `.github/actions` folder
+      - run: node .github/actions/prune_cancelled_skipped_runs.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Setup nodes
-      uses: actions/setup-node@v2
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+    # runs-on: ubuntu-latest
+    # timeout-minutes: 10
 
-    - name: Prune cancelled/skipped runs
-      run: node .github/actions/prune_cancelled_skipped_runs.js
+    # steps:
+    # - name: Checkout code
+    #   uses: actions/checkout@v2
 
-    - name: Prune runs older than 30 days
-      run: node .github/actions/prune_old_runs.js
+    # - name: Setup nodes and install octokit/action
+    #   # Install Node 12
+    #   uses: actions/setup-node@v1
+    #     with:
+    #       version: 12
+    #   - run: npm install @octokit/action
+
+    # - name: Prune cancelled/skipped runs
+    #   run: node .github/actions/prune_cancelled_skipped_runs.js
+    #     env:
+    #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # - name: Prune runs older than 30 days
+    #   run: node .github/actions/prune_old_runs.js
+    #     env:
+    #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
