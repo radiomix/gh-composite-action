@@ -19,14 +19,14 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const cancelled = await github.actions.listWorkflowRunsForRepo({
+          const cancelled = await octokit.rest.actions.listWorkflowRuns({
             owner: context.repo.owner,
             per_page: 100,
             repo: context.repo.repo,
             status: 'cancelled',
           });
 
-          const skipped = await github.actions.listWorkflowRunsForRepo({
+          const skipped = await octokit.rest.actions.listWorkflowRuns({
             owner: context.repo.owner,
             per_page: 100,
             repo: context.repo.repo,
