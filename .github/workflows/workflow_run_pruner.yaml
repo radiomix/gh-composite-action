@@ -17,7 +17,7 @@ jobs:
     - name: Prune cancelled/skipped runs
       uses: actions/github-script@v4
       with:
-        github-token: ${{ secrets.GH_ACTIONS_PERSONAL_ACCESS_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           const cancelled = await github.actions.listWorkflowRunsForRepo({
             owner: context.repo.owner,
