@@ -9,13 +9,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  prune:
+ prune_old_runs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
     steps:
     - name: Prune cancelled/skipped runs
-      uses: actions/github-script@v4
+      uses: actions/github-script@v5
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
