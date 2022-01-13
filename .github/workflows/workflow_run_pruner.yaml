@@ -14,8 +14,10 @@ jobs:
     timeout-minutes: 10
 
     steps:
-    - name: Setup nodes
+    - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Setup nodes
       uses: actions/setup-node@v2
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
