@@ -22,7 +22,7 @@ with:
 
 
 ## Clean Pruner Runs
-[![Clean up Pruner Runs](https://github.com/radiomix/gh-composite-action/actions/workflows/cleanup-pruner-runs.yaml/badge.svg)](https://github.com/radiomix/gh-composite-action/actions/workflows/cleanup-pruner-runs.yaml)
+[![Workflow Run Pruner](https://github.com/radiomix/gh-composite-action/actions/workflows/cleanup-runs.yaml/badge.svg)](https://github.com/radiomix/gh-composite-action/actions/workflows/cleanup-runs.yaml)
 
 This action cleans up old runs of the pruner itself.
 ### Caution: `workflow_id:` MUST BE ACTION FILE NAME!
