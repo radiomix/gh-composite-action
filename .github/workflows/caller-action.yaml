@@ -15,6 +15,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: Show folder .github/
+      run: tree .github/
+
     - name: Call composite action
       id: call-composite-action
       # https://github.community/t/path-to-action-in-the-same-repository-as-workflow/16952/2
