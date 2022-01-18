@@ -17,7 +17,8 @@ jobs:
 
       - name: ✂ Remove runs of the cleanup workflow itself
         # https://github.community/t/delete-old-workflow-results/16152/44
-        uses: actions/github-script@v4 # https://github.com/actions/github-script
+        uses: actions/github-script@v5
+        # https://github.com/actions/github-script
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           debug: true
@@ -27,7 +28,7 @@ jobs:
             let runs_to_delete = [];
 
             for (let page = 0; page < pages; page += 1) {
-              let response = await github.actions.listWorkflowRuns({
+              let response = await github.rest.actions.listWorkflowRuns({
                 owner: context.repo.owner,
                 page: page,
                 per_page: 100,
@@ -45,7 +46,7 @@ jobs:
             for (const run of runs_to_delete) {
               console.log(`[Deleting] Run id ${run[0]} of '${run[1]}'.`);
               try {
-                await github.actions.deleteWorkflowRun({
+                await github.rest.actions.deleteWorkflowRun({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   run_id: run[0]
