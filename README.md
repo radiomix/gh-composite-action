@@ -1,8 +1,7 @@
 ## Composite GH actions
+[![use composite action](https://github.com/radiomix/gh-composite-action/actions/workflows/caller-action.yaml/badge.svg)](https://github.com/radiomix/gh-composite-action/actions/workflows/caller-action.yaml)
 
 This action creates a file ~/date.txt with the current date.
-```
-[![use composite action](https://github.com/radiomix/gh-composite-action/actions/workflows/caller-action.yaml/badge.svg)](https://github.com/radiomix/gh-composite-action/actions/workflows/caller-action.yaml)
 
 ### Inputs
 
@@ -19,10 +18,13 @@ The time take by 'date'.
 uses: radiomix/gh-composite-action
 with:
   fileName: 'date.txt'
+```
+
 
 ## Clean Pruner Runs
-This action cleans up old runs of the pruner itself.
 [![Clean up Pruner Runs](https://github.com/radiomix/gh-composite-action/actions/workflows/cleanup-pruner-runs.yaml/badge.svg)](https://github.com/radiomix/gh-composite-action/actions/workflows/cleanup-pruner-runs.yaml)
+
+This action cleans up old runs of the pruner itself.
 ### Caution: `workflow_id:` MUST BE ACTION FILE NAME!
 
 ### Trigger
