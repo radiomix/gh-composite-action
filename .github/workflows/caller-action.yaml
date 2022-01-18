@@ -18,7 +18,7 @@ jobs:
     - name: Call composite action
       id: call-composite-action
       # https://github.community/t/path-to-action-in-the-same-repository-as-workflow/16952/2
-      uses: radiomix/gh-composite-action/.github/action/create-a-file
+      uses: radiomix/gh-composite-action/.github/action/create-a-file@main
       with:
         fileName: 'caller-date-file.txt'
 
