@@ -23,7 +23,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           debug: true
           script: |
-            # https://github.com/actions/github-script#welcome-a-first-time-contributor
+            // https://github.com/actions/github-script#welcome-a-first-time-contributor
             const creator = context.payload.sender.login
 
             const pages = 5;
