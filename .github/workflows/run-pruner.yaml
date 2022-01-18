@@ -31,14 +31,14 @@ jobs:
 
             let runs_to_delete = [];
 
-            // for (let page = 0; page < pages; page += 1) {
-            //   let response = await github.rest.actions.listWorkflowRuns({
-            //     owner: context.repo.owner,
-            //     page: page,
-            //     per_page: 100,
-            //     repo: context.repo.repo,
-            //     workflow_id: 'workflow_run_pruner.yml'
-            //   });
+            for (let page = 0; page < pages; page += 1) {
+              let response = await github.rest.actions.listWorkflowRuns({
+                owner: context.repo.owner,
+                page: page,
+                per_page: 100,
+                repo: context.repo.repo,
+                workflow_id: 'run-pruner.yaml'
+              });
 
             //   if (response.data.workflow_runs.length > 0) {
             //     for (const run of response.data.workflow_runs) {
