@@ -19,9 +19,11 @@ with:
   fileName: 'date.txt'
 ```
 
-## Clean old runs
-This action cleans up old runs of itself.
-https://github.com/radiomix/gh-composite-action/blob/6cd188308060a3e64b82eec1b5c8224a2085ef59/.github/workflows/run-pruner.yaml#L6-L64
+## Clean Pruner Runs
+This action cleans up old runs of the pruner itself.
+
+### Caution: `workflow_id:` MUST BE ACTION FILE NAME!
+
 ### Trigger
 - run manually `on: workflow_dispatch:`
 ### Inputs

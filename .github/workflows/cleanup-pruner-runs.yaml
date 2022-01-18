@@ -15,7 +15,7 @@ jobs:
       # Check out code using git
       - uses: actions/checkout@v2
 
-      - name: ✂ Remove runs of the cleanup workflow itself
+      - name: ✂ Cleaup Pruner Runs
         # https://github.community/t/delete-old-workflow-results/16152/44
         uses: actions/github-script@v5
         # https://github.com/actions/github-script
@@ -36,7 +36,7 @@ jobs:
                 page: page,
                 per_page: 100,
                 repo: context.repo.repo,
-                workflow_id: 'run-pruner.yaml'
+                workflow_id: 'cleanup-pruner-runs.yaml'
               });
 
               if (response.data.workflow_runs.length > 0) {
