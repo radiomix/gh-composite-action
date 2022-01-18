@@ -3,7 +3,7 @@
 # Source: https://github.community/t/delete-old-workflow-results/16152/42
 #
 
-name: Workflow Run Pruner
+name: Clean up Pruner Runs
 
 on:
   workflow_dispatch:
