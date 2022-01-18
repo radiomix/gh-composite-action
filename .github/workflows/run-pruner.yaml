@@ -25,11 +25,11 @@ jobs:
           script: |
             // https://github.com/actions/github-script#welcome-a-first-time-contributor
             const creator = context.payload.sender.login
-            console.log("JUST A TEST LOG MSGS FROM MKL")
+            console.log("JUST A TEST LOG MSGS from MKL")
 
-            // const pages = 5;
+            const pages = 5;
 
-            // let runs_to_delete = [];
+            let runs_to_delete = [];
 
             // for (let page = 0; page < pages; page += 1) {
             //   let response = await github.rest.actions.listWorkflowRuns({
