@@ -24,7 +24,7 @@ jobs:
 
     - name: Log composite action
       run: |
-        echo " Calling radiomix/gh-composite-action/.github/actions@main"
+        echo " Calling radiomix/gh-composite-action/.github/actions/create-a-file"
         echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
         ls -la
         cat caller-date-file.txt
