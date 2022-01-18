@@ -21,13 +21,13 @@ jobs:
     - name: Call composite action
       id: call-composite-action
       # https://github.community/t/path-to-action-in-the-same-repository-as-workflow/16952/2
-      uses: radiomix/gh-composite-action/.github/action/create-a-file@main
+      uses: radiomix/gh-composite-action/.github/actions/create-a-file
       with:
         fileName: 'caller-date-file.txt'
 
     - name: Log composite action
       run: |
-        echo " Calling radiomix/gh-composite-action/.github/actions/create-a-file"
+        echo " Calling radiomix/gh-composite-actions/.github/actions/create-a-file"
         echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
         ls -la
         cat caller-date-file.txt
