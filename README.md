@@ -18,6 +18,7 @@ uses: radiomix/gh-composite-action
 with:
   fileName: 'date.txt'
 ```
+[![use composite action](https://github.com/radiomix/gh-composite-action/actions/workflows/caller-action.yaml/badge.svg)](https://github.com/radiomix/gh-composite-action/actions/workflows/caller-action.yaml)
 
 ## Clean Pruner Runs
 This action cleans up old runs of the pruner itself.
