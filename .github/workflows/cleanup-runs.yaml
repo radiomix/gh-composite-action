@@ -4,9 +4,9 @@
 name: Workflow Run Pruner
 
 on:
-# RUNS NIGHTLY
-  schedule:
-  - cron: '0 0 * * *'  # GMT
+# # RUNS NIGHTLY
+#   schedule:
+#   - cron: '0 0 * * *'  # GMT
   workflow_dispatch:
 
 jobs:
