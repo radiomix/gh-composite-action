@@ -40,12 +40,13 @@ jobs:
                 workflow_id: 'run-pruner.yaml'
               });
 
-            //   if (response.data.workflow_runs.length > 0) {
-            //     for (const run of response.data.workflow_runs) {
-            //         runs_to_delete.push([run.id, run.name]);
-            //     }
-            //   }
-            // }
+              if (response.data.workflow_runs.length > 0) {
+                for (const run of response.data.workflow_runs) {
+                    runs_to_delete.push([run.id, run.name]);
+                }
+              }
+
+            } // end for ( let page
 
             // for (const run of runs_to_delete) {
             //   console.log(`[Deleting] Run id ${run[0]} of '${run[1]}'.`);
