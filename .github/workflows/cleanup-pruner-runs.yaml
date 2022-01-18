@@ -21,7 +21,6 @@ jobs:
         # https://github.com/actions/github-script
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          debug: true
           script: |
             console.log("** CLEANING UP OLD RUNS OF THIS WORKFLOW **")
 
