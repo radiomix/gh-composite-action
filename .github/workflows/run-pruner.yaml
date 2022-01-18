@@ -31,6 +31,7 @@ jobs:
 
             let runs_to_delete = [];
 
+            // CAUTION: workflow_id: MUST BE ACTION FILE NAME!
             for (let page = 0; page < pages; page += 1) {
               let response = await github.rest.actions.listWorkflowRuns({
                 owner: context.repo.owner,
@@ -48,18 +49,18 @@ jobs:
 
             } // end for ( let page
 
-            // for (const run of runs_to_delete) {
-            //   console.log(`[Deleting] Run id ${run[0]} of '${run[1]}'.`);
-            //   try {
-            //     await github.rest.actions.deleteWorkflowRun({
-            //       owner: context.repo.owner,
-            //       repo: context.repo.repo,
-            //       run_id: run[0]
-            //     });
-            //   } catch (error) {
-            //     // ignore errors
-            //   }
-            // }
+            for (const run of runs_to_delete) {
+              console.log(`[Deleting] Run id ${run[0]} of '${run[1]}'.`);
+              try {
+                await github.rest.actions.deleteWorkflowRun({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  run_id: run[0]
+                });
+              } catch (error) {
+                // ignore errors
+              }
+            }
 
 ##############################################################
       # Install Node 12
