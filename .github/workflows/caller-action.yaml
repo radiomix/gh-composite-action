@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
 
     - name: Call composite action
       id: call-composite-action
@@ -36,13 +36,13 @@ jobs:
     # - name: Call local action
     #   # https://github.community/t/path-to-action-in-the-same-repository-as-workflow/16952/2
     #   # ERROR: the `uses' attribute must be a path, a Docker image, or owner/repo@ref
-    #   uses: .github/actions/
+    #   uses: .github/actions/create-a-file
     #   with:
     #     fileName: 'caller-date-file.txt'
 
     # - name: Log local action
     #   run: |
-    #     echo " Calling .github/actions/"
+    #     echo " Calling .github/actions/create-a-file"
     #     echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
     #     ls -la
     #   shell: bash
