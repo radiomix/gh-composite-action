@@ -48,7 +48,7 @@ jobs:
     - name: Prune runs older than 4 days
       uses: actions/github-script@v5
       with:
-        github-token: ${{ secrets.GH_ACTIONS_PERSONAL_ACCESS_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           const days_to_expiration = 4;
           const ms_in_day = 86400000;
