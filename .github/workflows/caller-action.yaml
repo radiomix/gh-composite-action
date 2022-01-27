@@ -49,5 +49,5 @@ jobs:
         tool_name: dockerize-boot
         tool_repo: dockerize
         tool_owner: radiomix
-        tool_path: dockerize/libexec
+        tool_path: libexec
         install_path: /usr/local/bin
