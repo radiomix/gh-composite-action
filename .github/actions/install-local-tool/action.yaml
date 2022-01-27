@@ -62,8 +62,10 @@ runs:
     run: |
       pwd
       echo "Installing tool ${{ inputs.install_path }}/${{ inputs.tool_name }}. from ${{ inputs.tool_owner }}/${{ inputs.tool_repo }}/${{ inputs.tool_path }}/${{ inputs.tool_name }} "
-      mkdir -p ${{ inputs.install_path }}
-      ls -lart ${{ inputs.install_path }} ${{ inputs.tool_repo }} ${{ inputs.tool_repo }}/${{ inputs.tool_path }}/${{ inputs.tool_name }}
+      mkdir -pv ${{ inputs.install_path }}
+      ls -lart ${{ inputs.tool_repo }}
+      ls -lart ${{ inputs.tool_repo }}/${{ inputs.tool_path }}
+      ls -lart ${{ inputs.tool_repo }}/${{ inputs.tool_path }}/${{ inputs.tool_name }}
       # cp -v ${{ inputs.tool_repo }}/${{ inputs.tool_path }}/${{ inputs.tool_name }} ${{ inputs.install_path }}/${{ inputs.tool_name }}
       echo "${HOME}/${{ inputs.install_path }}" >> $GITHUB_PATH
       # chmod a+x ${{ inputs.install_path }}/${{ inputs.tool_name }}
