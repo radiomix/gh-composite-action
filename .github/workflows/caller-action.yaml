@@ -30,6 +30,7 @@ jobs:
 
     - name: Log composite action
       run: |
+        pwd
         echo " Calling radiomix/gh-composite-actions/.github/actions/create-a-file@main"
         echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
         ls -la
@@ -37,7 +38,8 @@ jobs:
         echo " Visiting checkout path: main"
         # needed, if checking out a second repo side-by-side
         cd main
-        git status
+        pwd
+        git status --long
       shell: bash
 
     - id: install-local-tool
