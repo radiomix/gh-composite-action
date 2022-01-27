@@ -34,7 +34,7 @@ jobs:
         git status
       shell: bash
 
-      id: install-local-tool
+    - id: install-local-tool
       # https://github.community/t/path-to-action-in-the-same-repository-as-workflow/16952/2
       uses: radiomix/gh-composite-action/.github/actions/install-local-tool@main
       with:
