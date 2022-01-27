@@ -1,0 +1,70 @@
+# Reusable composite GH action
+# Installs a specific local tool and adds install_path to $PATH
+#
+# Inputs:
+# - tool_name: <my_tool>               # tool to install
+# - tool_owner: <owner>                # owner of the repo to pull the tool from
+# - tool_repo: <thi-repo>              # repo to pull the tool from
+# - tool_path: <relative/path/to/dir>  # relative path to the tool
+# - install_path: <relative/path/dir>  # relative path to install the tool
+# - github-token:
+#
+# Requirement: access to checkout too_repo
+#
+
+name: 'Install Local Tool'
+
+description: 'Installs local tool'
+
+inputs:
+  tool_name:
+    description: 'tool to install, like "my_tool"'
+    required: true
+  tool_repo:
+    description: 'repo to pull the tool from, like "gh-actions-tools"'
+    required: true
+  tool_owner:
+    description: 'owner of the repo to pull the tool from, like "radiomix"'
+    required: false
+    default: 'radiomix'
+  tool_path:
+    description: 'relative path to the tool, like "tools/bin/"'
+    required: true
+    default: 'tools/bin/'
+  install_path:
+    description: 'relative path to install the tool like "/usr/local/bin"'
+    required: true
+    default: '/usr/local/bin'
+  github-token:
+    description: 'token to checkout the external repo'
+    required: false
+    default: ${{ github.token }}
+
+outputs:
+  tool:
+    description: "Environment variable tool"
+    value: ${{ steps.install_tool.outputs.tool }}
+
+runs:
+  using: composite
+  steps:
+  - id: checkout-tool-repo
+    uses: actions/checkout@v2
+    # FIXME: we need a GHA PrivateAccessToken, see ISSUE: https://github.com/actions/checkout/issues/417
+    with:
+      repository: ${{ inputs.tool_owner }}/${{ inputs.tool_repo }}
+      # token: ${{ inputs.github-token }}
+      token: ${{ github.token }}
+      ref: master
+      path: ${{ inputs.tool_repo }}
+
+  - id: install-tool
+    run: |
+      echo "Installing tool ${{ inputs.install_path }}/${{ inputs.tool_name }}. from ${{ inputs.tool_owner }}/${{ inputs.tool_repo }}/${{ inputs.tool_path }}/${{ inputs.tool_name }} "
+      mkdir -p ${{ inputs.install_path }}
+      cp ${{ inputs.tool_repo }}/${{ inputs.tool_path }}/${{ inputs.tool_name }} ${{ inputs.install_path }}/${{ inputs.tool_name }}
+      echo "${HOME}/${{ inputs.install_path }}" >> $GITHUB_PATH
+      chmod a+x ${{ inputs.install_path }}/${{ inputs.tool_name }}
+      echo "::set-output name=tool::${{ inputs.install_path }}/${{ inputs.tool_name }}"
+      which ${{ inputs.tool_name }}
+    shell: bash

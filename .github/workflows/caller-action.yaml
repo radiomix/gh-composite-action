@@ -34,6 +34,17 @@ jobs:
         git status
       shell: bash
 
+      id: install-local-tool
+      # https://github.community/t/path-to-action-in-the-same-repository-as-workflow/16952/2
+      uses: radiomix/gh-composite-action/.github/actions/install-local-tool@main
+      with:
+        tool_name: dockerize-boot
+        tool_repo: dockerize
+        tool_owner: radiomix
+        tool_path: dockerize/libexec
+        install_path: /usr/local/bin
+        github-token:
+
     #### NOT WORKING althoug docu says YES:
     #### https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#example-using-an-action-in-the-same-repository-as-the-workflow
     # - name: Call local action
