@@ -56,7 +56,7 @@ runs:
       # token: ${{ inputs.github-token }}
       token: ${{ github.token }}
       ref: master
-      path: ${{ github.workspace }}/../${{ inputs.tool_repo }}
+      path: ${{ inputs.tool_repo }}
 
   - id: install-tool
     run: |
