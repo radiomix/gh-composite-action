@@ -53,28 +53,27 @@ runs:
     # FIXME: we need a GHA PrivateAccessToken, see ISSUE: https://github.com/actions/checkout/issues/417
     with:
       repository: ${{ inputs.tool_owner }}/${{ inputs.tool_repo }}
-      # token: ${{ inputs.github-token }}
-      token: ${{ github.token }}
+      token: ${{ inputs.github-token }}
       ref: master
       path: ${{ inputs.tool_repo }}
 
   - id: install-tool
     run: |
-      echo "  **** STARTING PWD **** "
-      pwd
+      # echo "  **** STARTING PWD **** "
+      # pwd
       echo "Installing tool ${{ inputs.install_path }}/${{ inputs.tool_name }}. from ${{ inputs.tool_owner }}/${{ inputs.tool_repo }}/${{ inputs.tool_path }}/${{ inputs.tool_name }} "
       mkdir -pv ${{ inputs.install_path }}
-      echo "      ls -lart ${{ inputs.tool_repo }}"
-      ls -lart ${{ inputs.tool_repo }}
-      echo "      ls -lart ${{ inputs.tool_repo }}/${{ inputs.tool_path }}"
-      ls -lart ${{ inputs.tool_repo }}/${{ inputs.tool_path }}
-      ls -lart ${{ inputs.tool_repo }}/${{ inputs.tool_path }}/${{ inputs.tool_name }}
-      echo "      ls -lart ${{ inputs.tool_repo }}/${{ inputs.tool_path }}/${{ inputs.tool_name }}"
+      # echo "      ls -lart ${{ inputs.tool_repo }}"
+      # ls -lart ${{ inputs.tool_repo }}
+      # echo "      ls -lart ${{ inputs.tool_repo }}/${{ inputs.tool_path }}"
+      # ls -lart ${{ inputs.tool_repo }}/${{ inputs.tool_path }}
+      # ls -lart ${{ inputs.tool_repo }}/${{ inputs.tool_path }}/${{ inputs.tool_name }}
+      # echo "      ls -lart ${{ inputs.tool_repo }}/${{ inputs.tool_path }}/${{ inputs.tool_name }}"
       cp -v ${{ inputs.tool_repo }}/${{ inputs.tool_path }}/${{ inputs.tool_name }} ${{ inputs.install_path }}/${{ inputs.tool_name }}
       echo "${HOME}/${{ inputs.install_path }}" >> $GITHUB_PATH
-      chmod va+x ${{ inputs.install_path }}/${{ inputs.tool_name }}
+      chmod -v a+x ${{ inputs.install_path }}/${{ inputs.tool_name }}
       echo "::set-output name=tool::${{ inputs.install_path }}/${{ inputs.tool_name }}"
       which ${{ inputs.tool_name }}
-      pwd
-      echo "  **** FINISHED PWD **** "
+      # pwd
+      # echo "  **** FINISHED PWD **** "
     shell: bash
