@@ -43,7 +43,7 @@ jobs:
         tool_owner: radiomix
         tool_path: dockerize/libexec
         install_path: /usr/local/bin
-        github-token:
+        # github-token:
 
     #### NOT WORKING althoug docu says YES:
     #### https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#example-using-an-action-in-the-same-repository-as-the-workflow
