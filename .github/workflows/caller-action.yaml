@@ -14,8 +14,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-      # needed, if checking out a second repo side-by-side
       with:
+        # needed, if checking out a second repo side-by-side
         path: main
 
     - name: Show folder .github/
@@ -34,6 +34,9 @@ jobs:
         echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
         ls -la
         cat caller-date-file.txt
+        echo " Visiting checkout path: main"
+        # needed, if checking out a second repo side-by-side
+        cd main
         git status
       shell: bash
 
