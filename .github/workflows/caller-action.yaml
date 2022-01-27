@@ -43,20 +43,3 @@ jobs:
         tool_owner: radiomix
         tool_path: dockerize/libexec
         install_path: /usr/local/bin
-        # github-token:
-
-    #### NOT WORKING althoug docu says YES:
-    #### https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#example-using-an-action-in-the-same-repository-as-the-workflow
-    # - name: Call local action
-    #   # https://github.community/t/path-to-action-in-the-same-repository-as-workflow/16952/2
-    #   # ERROR: the `uses' attribute must be a path, a Docker image, or owner/repo@ref
-    #   uses: .github/actions/create-a-file
-    #   with:
-    #     fileName: 'caller-date-file.txt'
-
-    # - name: Log local action
-    #   run: |
-    #     echo " Calling .github/actions/create-a-file"
-    #     echo "Created File Content: ${{ steps.date-generator.outputs.fileContent }}"
-    #     ls -la
-    #   shell: bash
