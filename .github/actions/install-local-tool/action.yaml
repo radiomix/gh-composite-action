@@ -4,7 +4,7 @@
 # Inputs:
 # - tool_name: <my_tool>               # tool to install
 # - tool_owner: <owner>                # owner of the repo to pull the tool from
-# - tool_repo: <thi-repo>              # repo to pull the tool from
+# - tool_repo: <this-repo>             # repo to pull the tool from
 # - tool_path: <relative/path/to/dir>  # relative path to the tool
 # - install_path: <relative/path/dir>  # relative path to install the tool
 # - github-token:
@@ -60,12 +60,16 @@ runs:
 
   - id: install-tool
     run: |
+      echo "STARTING PWD"
       pwd
       echo "Installing tool ${{ inputs.install_path }}/${{ inputs.tool_name }}. from ${{ inputs.tool_owner }}/${{ inputs.tool_repo }}/${{ inputs.tool_path }}/${{ inputs.tool_name }} "
       mkdir -pv ${{ inputs.install_path }}
+      echo "      ls -lart ${{ inputs.tool_repo }}"
       ls -lart ${{ inputs.tool_repo }}
+      echo "      ls -lart ${{ inputs.tool_repo }}/${{ inputs.tool_path }}"
       ls -lart ${{ inputs.tool_repo }}/${{ inputs.tool_path }}
       ls -lart ${{ inputs.tool_repo }}/${{ inputs.tool_path }}/${{ inputs.tool_name }}
+      echo "      ls -lart ${{ inputs.tool_repo }}/${{ inputs.tool_path }}/${{ inputs.tool_name }}"
       # cp -v ${{ inputs.tool_repo }}/${{ inputs.tool_path }}/${{ inputs.tool_name }} ${{ inputs.install_path }}/${{ inputs.tool_name }}
       echo "${HOME}/${{ inputs.install_path }}" >> $GITHUB_PATH
       # chmod a+x ${{ inputs.install_path }}/${{ inputs.tool_name }}
