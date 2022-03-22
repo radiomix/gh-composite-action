@@ -60,11 +60,12 @@ jobs:
       uses: actions/github-script@v4
       with:
         script: |
-          github.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: 'Deployment succeeded! ✅',
+          const {owner, repo} = context.issue;
+          github.reactions.createForIssueComment({
+            owner,
+            repo,
+            comment_id: context.payload.comment.id,
+            content: "Deployment succeeded! ✅",
           });
 
     - name: Message failure
@@ -72,9 +73,10 @@ jobs:
       uses: actions/github-script@v4
       with:
         script: |
-          github.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: 'Deployment failed! ❌',
+          const {owner, repo} = context.issue;
+          github.reactions.createForIssueComment({
+            owner,
+            repo,
+            comment_id: context.payload.comment.id,
+            content: "Deployment succeeded! ❌",
           });
