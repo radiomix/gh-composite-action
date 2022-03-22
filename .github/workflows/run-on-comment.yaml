@@ -1,0 +1,80 @@
+#
+# POC to run some action on PR/Issue coments
+# Source: https://github.com/jannekem/actions-playground/blob/master/.github/workflows/deploy.yml
+#
+# The trigger-phrase is parsed from `github.event.comment.body`
+#
+
+name: Run GHA on PR comment
+
+on:
+  issue_comment:
+    types:
+      - created
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Test for the trigger-phrase
+    if: ${{ github.event.issue.pull_request && github.event.comment.body == 'Run Github Action' }}
+    steps:
+    - name: Get PR SHA
+      id: sha
+      uses: actions/github-script@v4
+      with:
+        result-encoding: string
+        script: |
+          const { owner, repo, number } = context.issue;
+          const pr = await github.pulls.get({
+            owner,
+            repo,
+            pull_number: number,
+          });
+          return pr.data.head.sha
+
+    - uses: actions/checkout@v2
+      with:
+        ref: ${{ steps.sha.outputs.result }}
+
+    - name: React to comment
+      uses: actions/github-script@v4
+      with:
+        script: |
+          const {owner, repo} = context.issue;
+          github.reactions.createForIssueComment({
+            owner,
+            repo,
+            comment_id: context.payload.comment.id,
+            content: "rocket",
+          });
+
+    - name: Run empty action and fail randomly
+      # Here we run the GHA triggerd by the comment
+      # As a POC, the action randomly fails/succseeds
+      run: |
+        echo " Running an empty GHA that fails randomly."
+        exit $((RANDOM % 2))
+
+    - name: Message success
+      if: ${{ success() }}
+      uses: actions/github-script@v4
+      with:
+        script: |
+          github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: 'Deployment succeeded! ✅',
+          });
+
+    - name: Message failure
+      if: ${{ failure() }}
+      uses: actions/github-script@v4
+      with:
+        script: |
+          github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: 'Deployment failed! ❌',
+          });
