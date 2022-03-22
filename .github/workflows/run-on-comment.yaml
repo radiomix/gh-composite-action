@@ -67,7 +67,7 @@ jobs:
             owner,
             repo,
             comment_id: context.payload.comment.id,
-            content: "hooray",
+            content: "+1",
           });
           github.issues.createComment({
             issue_number: context.issue.number,
