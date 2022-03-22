@@ -45,7 +45,7 @@ jobs:
             owner,
             repo,
             comment_id: context.payload.comment.id,
-            content: "rocket",
+            content: "eyes",
           });
 
     - name: Run empty action and fail randomly
@@ -65,7 +65,7 @@ jobs:
             owner,
             repo,
             comment_id: context.payload.comment.id,
-            content: "Deployment succeeded! ✅",
+            content: "hooray",
           });
 
     - name: Message failure
@@ -78,5 +78,5 @@ jobs:
             owner,
             repo,
             comment_id: context.payload.comment.id,
-            content: "Deployment succeeded! ❌",
+            content: "-1",
           });
