@@ -16,7 +16,7 @@ jobs:
   fail-randomly-GH-action:
     runs-on: ubuntu-latest
     # Test for the trigger-phrase
-    if: ${{ github.event.issue.pull_request && github.event.comment.body == '*Run Github Action*' }}
+    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body,'Run Github Action') }}
     steps:
     - name: Get PR SHA
       id: sha
