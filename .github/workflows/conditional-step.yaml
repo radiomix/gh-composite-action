@@ -96,7 +96,7 @@ jobs:
             echo -e " *** Perform release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
             mvn -B release:perform"
           fi
-          shell: bash
+        shell: bash
 
       - name: Show PR ${{ env.releasePrefix }}-${{ env.releaseVersion }}
         run: |
