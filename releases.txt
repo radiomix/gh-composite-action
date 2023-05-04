@@ -102,3 +102,6 @@ Phase: perform
  - Pull Request operation   - 
  - Pull Request Commit SHA  - 
  - Time                     - Thu May  4 15:05:46 UTC 2023
+
+Release PR release-1.2.3 with:
+Phase: prepare
