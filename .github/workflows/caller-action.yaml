@@ -22,7 +22,8 @@ jobs:
       run: |
         pwd
         ls -la
-        ls -la main/
+        cd  main
+        ls -la
         tree github/
       shell: bash
 
