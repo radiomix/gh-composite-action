@@ -88,3 +88,6 @@ Phase: perform
  - Pull Request operation   - 
  - Pull Request Commit SHA  - 
  - Time                     - Thu May  4 14:59:53 UTC 2023
+
+New release-1.2.3 with:
+Phase: prepare
