@@ -79,7 +79,7 @@ jobs:
       ###################################################
 
       - name: Maven Release:Prepare ${{ env.releasePrefix }}-${{ env.releaseVersion }}
-        if: ${{ steps.releaseCondition.outputs.value }} == 'prepare'
+        if: ${{ steps.releaseCondition.outputs.value }} == prepare
         run: |
          echo "*** Phase: ${{ steps.releaseCondition.outputs.value }}"
          echo -e " *** Prepare release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
@@ -87,7 +87,7 @@ jobs:
         shell: bash
 
       - name: Maven Release:Perform ${{ env.releasePrefix }}-${{ env.releaseVersion }}
-        if: ${{ steps.releaseCondition.outputs.value }} == 'perform'
+        if: ${{ steps.releaseCondition.outputs.value }} == perform
         run: |
          echo "*** Phase: ${{ steps.releaseCondition.outputs.value }}"
          echo -e " *** Perform release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
