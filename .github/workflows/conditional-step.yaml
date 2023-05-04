@@ -1,6 +1,6 @@
 ##
 
-name: Create PR
+name: Conditional Step
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
       - closed
 
 jobs:
-  PR-on-condition:
+  step-on-condition:
     runs-on: ubuntu-latest
     permissions:
       # Explicit permissions needed for peter-evans/create-pull-request
@@ -26,8 +26,6 @@ jobs:
 
       # Prepare git and ensure peter-evans/create-pull-request creates a new PR
       - name: Prepare PR ${{ env.releasePrefix }}-${{ env.releaseVersion }}
-        # DONT run on merge
-        if: github.event.pull_request.merged == false
         run: |
           git config --global user.email "GithubAction@support.eyefreight.com"
           git config --global user.name "Github Actions"
@@ -40,7 +38,6 @@ jobs:
 
       - name: Create PR ${{ env.releasePrefix }}-${{ env.releaseVersion }}
         # See https://github.com/peter-evans/create-pull-request
-        # DONT run on merge
         if: github.event.pull_request.merged == false
         uses: peter-evans/create-pull-request@v4
         id: create-release-pr
@@ -75,16 +72,25 @@ jobs:
       ###################################################
 
       - name: Maven Release:Prepare ${{ env.releasePrefix }}-${{ env.releaseVersion }}
-        # DONT run on merge
+        # Only run on merge
         if: github.event.pull_request.merged == false
         run: |
           echo -e " *** Prepare release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
           mvn -B release:clean release:prepare"
+        shell: bash
 
-      - name: Report release
-        # DONT run on merge
+      - name: Maven Release:Perform ${{ env.releasePrefix }}-${{ env.releaseVersion }}
+        if: github.event.pull_request.merged == true
+        run: |
+          echo -e " *** Perform release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
+          mvn -B release:perform"
+        shell: bash
+
+      - name: Show PR ${{ env.releasePrefix }}-${{ env.releaseVersion }}
+        # Don't run on merge
         if: github.event.pull_request.merged == false
         run: |
+          git branch
           echo " - Target Branch            - ${{ env.releasePrefix }}-${{ env.releaseVersion }}"  >> releases.txt
           echo " - Release Version          - ${{ env.releaseVersion }}"  >> releases.txt
           echo " - Development Version      - ${{ env.developmentVersion }}"  >> releases.txt
@@ -93,13 +99,6 @@ jobs:
           echo " - Pull Request Commit SHA  - ${{ steps.create-release-pr.outputs.pull-request-head-sha }}" >> releases.txt
           echo " - Time                     - $(date -u )" >> releases.txt
           git add releases.txt
-          git commit -m "Update release.txt for PR ${{ env.targetBranch }}/${{ env.releaseVersion }}"
-        shell: bash
-
-      - name: Maven Release:Perform ${{ env.releasePrefix }}-${{ env.releaseVersion }}
-        # ONLY run on merge
-        if: github.event.pull_request.merged == true
-        run: |
-          echo -e " *** Perform release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
-          mvn -B release:perform"
+          git commit -m "Update release.txt for PR ${{ env.releasePrefix }}-${{ env.releaseVersion }} "
+          git push -u origin ${{ env.releasePrefix }}-${{ env.releaseVersion }}
         shell: bash
