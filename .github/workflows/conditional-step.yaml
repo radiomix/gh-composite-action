@@ -21,7 +21,7 @@ jobs:
       - uses: haya14busa/action-cond@v1
         id: releaseCondition
         with:
-          cond: ${{ github.ref == 'refs/heads/develop' && github.event_name == 'push'}}
+          cond: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push'}}
           if_true: 'perform'
           if_false: 'prepare'
       - name: Show release action
