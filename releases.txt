@@ -8,3 +8,6 @@ Phase: prepare
  - Pull Request operation   - created
  - Pull Request Commit SHA  - 28dfc1338ca221f0749818de371b9a5ffd862b82
  - Time                     - Thu May  4 13:43:01 UTC 2023
+
+New release-1.2.3 with:
+Phase: prepare
