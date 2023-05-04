@@ -22,17 +22,6 @@ jobs:
       baseBranch: 'main'
 
     steps:
-      - uses: haya14busa/action-cond@v1
-        id: releaseCondition
-        with:
-          cond: ${{ github.event.pull_request.merged == true }}
-          if_true: 'perform'
-          if_false: 'prepare'
-      - name: Show release action
-        run: |
-          echo "** RUNNING: mvn release:${{ steps.releaseCondition.outputs.value }}"
-        shell: bash
-
       - uses: actions/checkout@v3
 
       # Prepare git and ensure peter-evans/create-pull-request creates a new PR
@@ -44,7 +33,6 @@ jobs:
           git config -l --global
           echo "" >> releases.txt
           echo "Release PR ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:" >> releases.txt
-          echo "Phase: ${{ steps.releaseCondition.outputs.value }}" >> releases.txt
           git add releases.txt
         shell: bash
 
@@ -84,34 +72,25 @@ jobs:
       ###################################################
 
       - name: Maven Release:Prepare ${{ env.releasePrefix }}-${{ env.releaseVersion }}
+        # Only run on merge
         if: github.event.pull_request.merged == false
         run: |
-          # if [[ ${{ steps.releaseCondition.outputs.value }} == prepare ]]
-          # then
-            echo -e " *** Prepare release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
-            mvn -B release:clean release:prepare"
-          # else
-          #   echo "*** Phase: ${{ steps.releaseCondition.outputs.value }}"
-          # fi
+          echo -e " *** Prepare release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
+          mvn -B release:clean release:prepare"
         shell: bash
 
       - name: Maven Release:Perform ${{ env.releasePrefix }}-${{ env.releaseVersion }}
         if: github.event.pull_request.merged == true
         run: |
-          # if [[ ${{ steps.releaseCondition.outputs.value }} == perform ]]
-          # then
-            echo -e " *** Perform release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
-            mvn -B release:perform"
-          # else
-          #   echo "*** Phase: ${{ steps.releaseCondition.outputs.value }}"
-          # fi
+          echo -e " *** Perform release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
+          mvn -B release:perform"
         shell: bash
 
-      - name: Show PR ${{ env.releasePrefix }}-${{ env.releaseVersion }} for ${{ steps.releaseCondition.outputs.value }}
-        if: github.event.pull_request.merged == true
+      - name: Show PR ${{ env.releasePrefix }}-${{ env.releaseVersion }}
+        # Don't run on merge
+        if: github.event.pull_request.merged == false
         run: |
           git branch
-          echo "Phase: ${{ steps.releaseCondition.outputs.value }}" >> releases.txt
           echo " - Target Branch            - ${{ env.releasePrefix }}-${{ env.releaseVersion }}"  >> releases.txt
           echo " - Release Version          - ${{ env.releaseVersion }}"  >> releases.txt
           echo " - Development Version      - ${{ env.developmentVersion }}"  >> releases.txt
@@ -120,6 +99,6 @@ jobs:
           echo " - Pull Request Commit SHA  - ${{ steps.create-release-pr.outputs.pull-request-head-sha }}" >> releases.txt
           echo " - Time                     - $(date -u )" >> releases.txt
           git add releases.txt
-          git commit -m "Update release.txt for PR ${{ env.releasePrefix }}-${{ env.releaseVersion }} Phase: ${{ steps.releaseCondition.outputs.value }}"
+          git commit -m "Update release.txt for PR ${{ env.releasePrefix }}-${{ env.releaseVersion }} "
           git push -v -u origin ${{ env.baseBranch }}
         shell: bash
