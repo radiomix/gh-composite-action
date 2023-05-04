@@ -108,6 +108,7 @@ jobs:
         shell: bash
 
       - name: Show PR ${{ env.releasePrefix }}-${{ env.releaseVersion }} for ${{ steps.releaseCondition.outputs.value }}
+        if: github.event.pull_request.merged == true
         run: |
           git branch
           echo "Phase: ${{ steps.releaseCondition.outputs.value }}" >> releases.txt
@@ -119,11 +120,6 @@ jobs:
           echo " - Pull Request Commit SHA  - ${{ steps.create-release-pr.outputs.pull-request-head-sha }}" >> releases.txt
           echo " - Time                     - $(date -u )" >> releases.txt
           git add releases.txt
-          git commit -m "Show PR ${{ env.releasePrefix }}-${{ env.releaseVersion }}"
-          if [[ ${{ github.event.pull_request.merged == true }} ]]
-          then
-            git push -v -u origin ${{ env.baseBranch }}
-          else
-            git push -v -u origin ${{ env.releasePrefix }}-${{ env.releaseVersion }}
-          fi
+          git commit -m "Update release.txt for PR ${{ env.releasePrefix }}-${{ env.releaseVersion }} Phase: ${{ steps.releaseCondition.outputs.value }}"
+          git push -v -u origin ${{ env.baseBranch }}
         shell: bash
