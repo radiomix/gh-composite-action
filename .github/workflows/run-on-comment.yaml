@@ -3,6 +3,8 @@
 # Source: https://github.com/jannekem/actions-playground/blob/master/.github/workflows/deploy.yml
 #
 # The trigger-phrase is parsed from `github.event.comment.body`
+# We update the comment according to GHA exit code.
+# Allowed update: ["+1", "-1", "laugh", "confused", "heart", "hooray", "rocket", "eyes"]
 #
 
 name: Run GHA on PR comment
@@ -13,10 +15,10 @@ on:
       - created
 
 jobs:
-  deploy:
+  fail-randomly-GH-action:
     runs-on: ubuntu-latest
     # Test for the trigger-phrase
-    if: ${{ github.event.issue.pull_request && github.event.comment.body == 'Run Github Action' }}
+    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body,'Run Github Action') }}
     steps:
     - name: Get PR SHA
       id: sha
@@ -45,7 +47,7 @@ jobs:
             owner,
             repo,
             comment_id: context.payload.comment.id,
-            content: "rocket",
+            content: "eyes",
           });
 
     - name: Run empty action and fail randomly
@@ -60,6 +62,13 @@ jobs:
       uses: actions/github-script@v4
       with:
         script: |
+          const {owner, repo} = context.issue;
+          github.reactions.createForIssueComment({
+            owner,
+            repo,
+            comment_id: context.payload.comment.id,
+            content: "+1",
+          });
           github.issues.createComment({
             issue_number: context.issue.number,
             owner: context.repo.owner,
@@ -72,9 +81,16 @@ jobs:
       uses: actions/github-script@v4
       with:
         script: |
+          const {owner, repo} = context.issue;
+          github.reactions.createForIssueComment({
+            owner,
+            repo,
+            comment_id: context.payload.comment.id,
+            content: "-1",
+          });
           github.issues.createComment({
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: 'Deployment failed! ❌',
+             body: 'Deployment failed! ❌',
           });
