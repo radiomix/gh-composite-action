@@ -43,7 +43,7 @@ jobs:
           echo "****** git config -l --global *******"
           git config -l --global
           echo "" >> releases.txt
-          echo "New ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:" >> releases.txt
+          echo "Release PR ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:" >> releases.txt
           echo "Phase: ${{ steps.releaseCondition.outputs.value }}" >> releases.txt
           git add releases.txt
         shell: bash
