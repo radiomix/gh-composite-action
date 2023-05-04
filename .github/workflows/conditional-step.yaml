@@ -35,7 +35,7 @@ jobs:
       - name: Prepare PR ${{ env.releasePrefix }}-${{ env.releaseVersion }}
         run: |
           git config --global user.email "GithubAction@support.eyefreight.com"
-          git config --global user.name "eTMS Github Actions"
+          git config --global user.name "Github Actions"
           echo "****** git config -l --global *******"
           git config -l --global
           echo "" >> releases.txt
