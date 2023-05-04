@@ -1,6 +1,6 @@
 ##
 
-name: conditional Step
+name: Conditional Step
 
 on:
   workflow_dispatch:
