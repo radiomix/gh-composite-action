@@ -24,7 +24,7 @@ jobs:
         ls -la
         cd  main
         ls -la
-        tree github/
+        tree ./github/
       shell: bash
 
     - name: Call composite action
