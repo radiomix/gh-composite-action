@@ -1,6 +1,6 @@
 ##
 
-name: Conditional Step
+name: Create PR
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
       - closed
 
 jobs:
-  step-on-condition:
+  PR-on-condition:
     runs-on: ubuntu-latest
     permissions:
       # Explicit permissions needed for peter-evans/create-pull-request
