@@ -80,17 +80,10 @@ jobs:
         shell: bash
 
       - name: Maven Release:Perform ${{ env.releasePrefix }}-${{ env.releaseVersion }}
-        if: github.event.pull_request.merged == true
+        # if: github.event.pull_request.merged == true
         run: |
           echo -e " *** Perform release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
           mvn -B release:perform"
-        shell: bash
-
-      - name: Show PR ${{ env.releasePrefix }}-${{ env.releaseVersion }}
-        # Don't run on merge
-        if: github.event.pull_request.merged == false
-        run: |
-          git branch
           echo " - Target Branch            - ${{ env.releasePrefix }}-${{ env.releaseVersion }}"  >> releases.txt
           echo " - Release Version          - ${{ env.releaseVersion }}"  >> releases.txt
           echo " - Development Version      - ${{ env.developmentVersion }}"  >> releases.txt
@@ -99,6 +92,4 @@ jobs:
           echo " - Pull Request Commit SHA  - ${{ steps.create-release-pr.outputs.pull-request-head-sha }}" >> releases.txt
           echo " - Time                     - $(date -u )" >> releases.txt
           git add releases.txt
-          git commit -m "Update release.txt for PR ${{ env.releasePrefix }}-${{ env.releaseVersion }} "
-          git push -u origin ${{ env.releasePrefix }}-${{ env.releaseVersion }}
         shell: bash
