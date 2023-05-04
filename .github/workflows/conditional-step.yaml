@@ -79,6 +79,7 @@ jobs:
       ###################################################
 
       - name: Maven Release:Prepare ${{ env.releasePrefix }}-${{ env.releaseVersion }}
+        if: contains(${{ steps.releaseCondition.outputs.value }}, prepare)
         run: |
           if [[ ${{ steps.releaseCondition.outputs.value }} == prepare ]]
           then
@@ -89,6 +90,7 @@ jobs:
         shell: bash
 
       - name: Maven Release:Perform ${{ env.releasePrefix }}-${{ env.releaseVersion }}
+        if: contains(${{ steps.releaseCondition.outputs.value }}, perform)
         run: |
           if [[ ${{ steps.releaseCondition.outputs.value }} == perform ]]
           then
