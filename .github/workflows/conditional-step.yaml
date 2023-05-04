@@ -4,6 +4,9 @@ name: Conditional Step
 
 on:
   workflow_dispatch:
+  pull_request:
+    types:
+      - closed
 
 jobs:
   step-on-condition:
@@ -79,6 +82,7 @@ jobs:
       ###################################################
 
       - name: Maven Release:Prepare ${{ env.releasePrefix }}-${{ env.releaseVersion }}
+        if: github.event.pull_request.merged == false
         run: |
           if [[ ${{ steps.releaseCondition.outputs.value }} == prepare ]]
           then
@@ -90,6 +94,7 @@ jobs:
         shell: bash
 
       - name: Maven Release:Perform ${{ env.releasePrefix }}-${{ env.releaseVersion }}
+        if: github.event.pull_request.merged == true
         run: |
           if [[ ${{ steps.releaseCondition.outputs.value }} == perform ]]
           then
