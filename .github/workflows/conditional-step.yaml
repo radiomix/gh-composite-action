@@ -86,25 +86,25 @@ jobs:
       - name: Maven Release:Prepare ${{ env.releasePrefix }}-${{ env.releaseVersion }}
         if: github.event.pull_request.merged == false
         run: |
-          if [[ ${{ steps.releaseCondition.outputs.value }} == prepare ]]
-          then
+          # if [[ ${{ steps.releaseCondition.outputs.value }} == prepare ]]
+          # then
             echo -e " *** Prepare release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
             mvn -B release:clean release:prepare"
-          else
-            echo "*** Phase: ${{ steps.releaseCondition.outputs.value }}"
-          fi
+          # else
+          #   echo "*** Phase: ${{ steps.releaseCondition.outputs.value }}"
+          # fi
         shell: bash
 
       - name: Maven Release:Perform ${{ env.releasePrefix }}-${{ env.releaseVersion }}
         if: github.event.pull_request.merged == true
         run: |
-          if [[ ${{ steps.releaseCondition.outputs.value }} == perform ]]
-          then
+          # if [[ ${{ steps.releaseCondition.outputs.value }} == perform ]]
+          # then
             echo -e " *** Perform release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
             mvn -B release:perform"
-          else
-            echo "*** Phase: ${{ steps.releaseCondition.outputs.value }}"
-          fi
+          # else
+          #   echo "*** Phase: ${{ steps.releaseCondition.outputs.value }}"
+          # fi
         shell: bash
 
       - name: Show PR ${{ env.releasePrefix }}-${{ env.releaseVersion }} for ${{ steps.releaseCondition.outputs.value }}
