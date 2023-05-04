@@ -63,3 +63,14 @@ Phase: prepare
 
 New release-1.2.3 with:
 Phase: prepare
+
+New release-1.2.3 with:
+Phase: prepare
+Phase: prepare
+ - Target Branch            - release-1.2.3
+ - Release Version          - 1.2.3
+ - Development Version      - 1.2.4-SNAPSHOT
+ - Pull Request URL         - 
+ - Pull Request operation   - 
+ - Pull Request Commit SHA  - 
+ - Time                     - Thu May  4 14:55:04 UTC 2023
