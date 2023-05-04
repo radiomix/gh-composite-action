@@ -19,7 +19,13 @@ jobs:
         path: main
 
     - name: Show folder .github/
-      run: tree .github/
+      run: |
+        pwd
+        ls -la
+        cd  main
+        ls -la
+        tree .github/
+      shell: bash
 
     - name: Call composite action
       id: call-composite-action
