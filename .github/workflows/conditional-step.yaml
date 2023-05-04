@@ -52,7 +52,7 @@ jobs:
           branch: "${{ env.releasePrefix }}-${{ env.releaseVersion }}"
           title: "${{ env.releasePrefix }}-${{ env.releaseVersion }}"
           commit-message: Create PR ${{ env.releasePrefix }}-${{ env.releaseVersion }}
-          reviewers: ade-gunawan-elemica, nadja-elemica, radiomix, whaan, rnyhof, sthompson22
+          reviewers: radiomix
           body: |
             ## Release `${{ env.releasePrefix }}-${{ env.releaseVersion }}`
             - Release version: `${{ env.releaseVersion }}`
