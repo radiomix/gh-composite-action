@@ -22,7 +22,8 @@ jobs:
       run: |
         pwd
         ls -la
-        tree .github/
+        ls -la main/
+        tree github/
       shell: bash
 
     - name: Call composite action
