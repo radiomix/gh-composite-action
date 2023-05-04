@@ -1,0 +1,106 @@
+##
+
+name: conditional Step
+
+on:
+  workflow_dispatch:
+
+jobs:
+  step-on-condition:
+    runs-on: ubuntu-latest
+    permissions:
+      # Explicit permissions needed for peter-evans/create-pull-request
+      pull-requests: write
+      contents: write
+    env:
+      releasePrefix: 'release'
+      releaseVersion: '1.2.3'
+      developmentVersion: '1.2.4-SNAPSHOT'
+
+    steps:
+      - uses: haya14busa/action-cond@v1
+        id: releaseCondition
+        with:
+          cond: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push'}}
+          if_true: 'perform'
+          if_false: 'prepare'
+      - name: Show release action
+        run: |
+          echo "** RUNNING: mvn release:${{ steps.releaseCondition.outputs.value }}"
+        shell: bash
+
+      - uses: actions/checkout@v3
+
+      # Prepare git and ensure peter-evans/create-pull-request creates a new PR
+      - name: Prepare PR ${{ env.releasePrefix }}-${{ env.releaseVersion }}
+        run: |
+          git config --global user.email "GithubAction@support.eyefreight.com"
+          git config --global user.name "eTMS Github Actions"
+          echo "****** git config -l --global *******"
+          git config -l --global
+          echo "" >> releases.txt
+          echo "New ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:" >> releases.txt
+          git add releases.txt
+        shell: bash
+
+      - name: Create PR ${{ env.releasePrefix }}-${{ env.releaseVersion }}
+        # See https://github.com/peter-evans/create-pull-request
+        uses: peter-evans/create-pull-request@v4
+        id: create-release-pr
+        with:
+          # Branch name for of the PR to create
+          branch: "${{ env.releasePrefix }}-${{ env.releaseVersion }}"
+          title: "${{ env.releasePrefix }}-${{ env.releaseVersion }}"
+          commit-message: Create PR ${{ env.releasePrefix }}-${{ env.releaseVersion }}
+          reviewers: ade-gunawan-elemica, nadja-elemica, radiomix, whaan, rnyhof, sthompson22
+          body: |
+            ## Release `${{ env.releasePrefix }}-${{ env.releaseVersion }}`
+            - Release version: `${{ env.releaseVersion }}`
+            - Development version: `${{ env.developmentVersion }}`
+            -------------
+
+            - [ ] Change log has been added
+            - [ ] New feature are described
+            - [ ] Breaking change are described
+            - [ ] Documentation has been update
+
+            -------------
+
+            - [ ] previous/related PR:
+            - [ ] Jira Card:
+            - [ ] Teams Channel:
+            - [ ] Slack Channel:
+          labels: ${{ env.releasePrefix }}
+
+
+      ###################################################
+      # Now in branch ${{ env.releasePrefix }}-${{ env.releaseVersion }} #
+      ###################################################
+
+      - name: Maven Release:Prepare ${{ env.releasePrefix }}-${{ env.releaseVersion }}
+        if: ${{ steps.releaseCondition.outputs.value }} == 'prepare'
+        run: |
+         echo -e " *** Prepare release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
+         mvn -B release:clean release:prepare"
+        shell: bash
+
+      - name: Maven Release:Perform ${{ env.releasePrefix }}-${{ env.releaseVersion }}
+        if: ${{ steps.releaseCondition.outputs.value }} == 'perform'
+        run: |
+         echo -e " *** Perform release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
+         mvn -B release:perform"
+        shell: bash
+
+      - name: Show PR ${{ env.releasePrefix }}-${{ env.releaseVersion }}
+        run: |
+          echo " - Target Branch            - ${{ env.releasePrefix }}-${{ env.releaseVersion }}"  >> releases.txt
+          echo " - Release Version          - ${{ env.releaseVersion }}"  >> releases.txt
+          echo " - Development Version      - ${{ env.developmentVersion }}"  >> releases.txt
+          echo " - Pull Request URL         - ${{ steps.create-release-pr.outputs.pull-request-url }}" >> releases.txt
+          echo " - Pull Request operation   - ${{ steps.create-release-pr.outputs.pull-request-operation }}" >> releases.txt
+          echo " - Pull Request Commit SHA  - ${{ steps.create-release-pr.outputs.pull-request-head-sha }}" >> releases.txt
+          echo " - Time                     - $(date -u )" >> releases.txt
+          git add releases.txt
+          git commit -m "Show PR ${{ env.releasePrefix }}-${{ env.releaseVersion }}"
+          git push -u origin ${{ env.releasePrefix }}-${{ env.releaseVersion }}
+        shell: bash
