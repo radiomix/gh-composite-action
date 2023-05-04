@@ -107,7 +107,7 @@ jobs:
           fi
         shell: bash
 
-      - name: Show PR ${{ env.releasePrefix }}-${{ env.releaseVersion }}
+      - name: Show PR ${{ env.releasePrefix }}-${{ env.releaseVersion }} for ${{ steps.releaseCondition.outputs.value }}
         run: |
           git branch
           echo "Phase: ${{ steps.releaseCondition.outputs.value }}" >> releases.txt
@@ -124,7 +124,6 @@ jobs:
           then
             git push -v -u origin ${{ env.baseBranch }}
           else
-            git push -u origin ${{ env.releasePrefix }}-${{ env.releaseVersion }}
+            git push -v -u origin ${{ env.releasePrefix }}-${{ env.releaseVersion }}
           fi
-          git push -v -u origin ${{ env.releasePrefix }}-${{ env.releaseVersion }}
         shell: bash
