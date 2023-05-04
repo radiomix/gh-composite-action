@@ -21,3 +21,10 @@ Phase: prepare
 
 New release-1.2.3 with:
 Phase: prepare
+ - Target Branch            - release-1.2.3
+ - Release Version          - 1.2.3
+ - Development Version      - 1.2.4-SNAPSHOT
+ - Pull Request URL         - https://github.com/radiomix/gh-composite-action/pull/11
+ - Pull Request operation   - updated
+ - Pull Request Commit SHA  - 78a5e89c07ce397a452b0a30c8d202896b78bc24
+ - Time                     - Thu May  4 13:58:43 UTC 2023
