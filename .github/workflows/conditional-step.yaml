@@ -100,5 +100,5 @@ jobs:
           echo " - Time                     - $(date -u )" >> releases.txt
           git add releases.txt
           git commit -m "Update release.txt for PR ${{ env.releasePrefix }}-${{ env.releaseVersion }} "
-          git push -v -u origin ${{ env.baseBranch }}
+          git push -u origin ${{ env.releasePrefix }}-${{ env.releaseVersion }}
         shell: bash
