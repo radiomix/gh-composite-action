@@ -108,6 +108,8 @@ jobs:
 
       - name: Show PR ${{ env.releasePrefix }}-${{ env.releaseVersion }}
         run: |
+          git branch
+          echo "Phase: ${{ steps.releaseCondition.outputs.value }}" >> releases.txt
           echo " - Target Branch            - ${{ env.releasePrefix }}-${{ env.releaseVersion }}"  >> releases.txt
           echo " - Release Version          - ${{ env.releaseVersion }}"  >> releases.txt
           echo " - Development Version      - ${{ env.developmentVersion }}"  >> releases.txt
@@ -117,5 +119,5 @@ jobs:
           echo " - Time                     - $(date -u )" >> releases.txt
           git add releases.txt
           git commit -m "Show PR ${{ env.releasePrefix }}-${{ env.releaseVersion }}"
-          git push -u origin ${{ env.releasePrefix }}-${{ env.releaseVersion }}
+          git push -v -u origin ${{ env.releasePrefix }}-${{ env.releaseVersion }}
         shell: bash
