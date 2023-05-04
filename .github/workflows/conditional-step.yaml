@@ -40,6 +40,7 @@ jobs:
           git config -l --global
           echo "" >> releases.txt
           echo "New ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:" >> releases.txt
+          echo "Phase: ${{ steps.releaseCondition.outputs.value }}" >> releases.txt
           git add releases.txt
         shell: bash
 
@@ -80,6 +81,7 @@ jobs:
       - name: Maven Release:Prepare ${{ env.releasePrefix }}-${{ env.releaseVersion }}
         if: ${{ steps.releaseCondition.outputs.value }} == 'prepare'
         run: |
+         echo "*** Phase: ${{ steps.releaseCondition.outputs.value }}"
          echo -e " *** Prepare release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
          mvn -B release:clean release:prepare"
         shell: bash
@@ -87,6 +89,7 @@ jobs:
       - name: Maven Release:Perform ${{ env.releasePrefix }}-${{ env.releaseVersion }}
         if: ${{ steps.releaseCondition.outputs.value }} == 'perform'
         run: |
+         echo "*** Phase: ${{ steps.releaseCondition.outputs.value }}"
          echo -e " *** Perform release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
          mvn -B release:perform"
         shell: bash
