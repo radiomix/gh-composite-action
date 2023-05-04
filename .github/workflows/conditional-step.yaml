@@ -79,24 +79,24 @@ jobs:
       ###################################################
 
       - name: Maven Release:Prepare ${{ env.releasePrefix }}-${{ env.releaseVersion }}
-        if: contains(${{ steps.releaseCondition.outputs.value }}, prepare)
         run: |
           if [[ ${{ steps.releaseCondition.outputs.value }} == prepare ]]
           then
-            echo "*** Phase: ${{ steps.releaseCondition.outputs.value }}"
             echo -e " *** Prepare release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
             mvn -B release:clean release:prepare"
+          else
+            echo "*** Phase: ${{ steps.releaseCondition.outputs.value }}"
           fi
         shell: bash
 
       - name: Maven Release:Perform ${{ env.releasePrefix }}-${{ env.releaseVersion }}
-        if: contains(${{ steps.releaseCondition.outputs.value }}, perform)
         run: |
           if [[ ${{ steps.releaseCondition.outputs.value }} == perform ]]
           then
-            echo "*** Phase: ${{ steps.releaseCondition.outputs.value }}"
             echo -e " *** Perform release ${{ env.releasePrefix }}-${{ env.releaseVersion }} with:
             mvn -B release:perform"
+          else
+            echo "*** Phase: ${{ steps.releaseCondition.outputs.value }}"
           fi
         shell: bash
 
