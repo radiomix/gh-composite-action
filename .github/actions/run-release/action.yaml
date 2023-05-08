@@ -38,6 +38,7 @@ runs:
         releaseVersion: ${{ env.releaseVersion }}
         developmentVersion: ${{ env.developmentVersion }}
         "
+        git branch -l
       shell: bash
 
 
@@ -58,9 +59,7 @@ runs:
           - Release version: `${{ inputs.releaseVersion }}`
           - Development version: `${{ inputs.developmentVersion }}`
           - Tag: [${{ env.artifact-id }}-${{ inputs.releaseVersion }}](https://github.com/radiomix/gh-composite-action/releases/tag/${{ env.artifact-id }}-${{ inputs.releaseVersion }})
-          - Nexus: [Nexus version ${{ inputs.releaseVersion }}](https://nexus.eyedev.io/#browse/search/custom=version%3D${{ inputs.releaseVersion }})
-          - itude-logistics-app: [${{ inputs.releaseVersion }}](https://nexus.eyedev.io/repository/ef-releases/com/eyefreight/tms/itude-logistics-app/${{ inputs.releaseVersion }}/itude-logistics-app-${{ inputs.releaseVersion }}.war)
-          - itude-logistics-eyefreight-daemon: [${{ inputs.releaseVersion }}](https://nexus.eyedev.io/repository/ef-releases/com/eyefreight/tms/itude-logistics-eyefreight-daemon/${{ inputs.releaseVersion }}/itude-logistics-eyefreight-daemon-${{ inputs.releaseVersion }}.war)
+
           -------------
 
           - [ ] Change log has been added
@@ -84,6 +83,7 @@ runs:
         git config --global user.name " Github Actions"
         echo "****** git config -l --global *******"
         git config -l --global
+        git branch -l
         echo "" >> releases.txt
         echo "New ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }} with:" >> releases.txt
         git add releases.txt
@@ -92,6 +92,7 @@ runs:
     - name: Release:Prepare ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
       id: prepare-release
       run: |
+        git branch -l
         echo " Phase PREPARE" >> release.txt
         git add release.txt
         git commit -m "PREPARE ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
@@ -100,6 +101,7 @@ runs:
     - name: Release:Perform ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
       id: perform-release
       run: |
+        git branch -l
         echo " Phase PEFORM" >> release.txt
         git add release.txt
         git commit -m "PERFORM ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
@@ -108,6 +110,7 @@ runs:
     - name: Finish ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
       id: write-release-values
       run: |
+        git branch -l
         echo " - Base Branch              - ${{ inputs.baseBranch }}" >> releases.txt
         echo " - Target Branch            - ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"  >> releases.txt
         echo " - Release Version          - ${{ inputs.releaseVersion }}"  >> releases.txt
