@@ -93,38 +93,20 @@ runs:
     # Now in branch ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }} #
     ###################################################
 
-    - name: Maven Release:Prepare ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
+    - name: Release:Prepare ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
       id: prepare-release
       run: |
-        echo -e " *** Prepare release ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }} with:
-        mvn -B release:clean release:prepare \\
-        -DreleaseVersion=${{ inputs.releaseVersion }} \\
-        -DdevelopmentVersion=${{ inputs.developmentVersion }} \\
-        -Dtag=${{ env.artifact-id }}-${{ inputs.releaseVersion }}"
-
         echo " Phase PREPARE" >> release.txt
         git add release.txt
         git commit -m "PREPARE ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
-
       shell: bash
 
-    - name: Maven Release:Perform ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
+    - name: Release:Perform ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
       id: perform-release
       run: |
-        echo -e " *** Perform release ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }} with:
-        mvn -B release:perform \\
-        -P less,npm,docker \\
-        -Ddocker.imagePropertyConfiguration=override \\
-        -Ddocker.tags.1=latest"
-
         echo " Phase PEFORM" >> release.txt
         git add release.txt
         git commit -m "PERFORM ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
-
-        # mvn -B release:perform \
-        # -P less,npm,docker \
-        # -Ddocker.imagePropertyConfiguration=override \
-        # -Ddocker.tags.1=latest
       shell: bash
 
     - name: Finish ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
