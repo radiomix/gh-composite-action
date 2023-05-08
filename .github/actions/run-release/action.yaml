@@ -54,9 +54,9 @@ runs:
         echo "****** git config -l --global *******"
         git config -l --global
         git branch -l
-        echo "" >> ${{ env.release_file }}
-        echo "New ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }} with:" >> ${{ env.release_file }}
-        git add ${{ env.release_file }}
+        echo "" >> ${{ inputs.release_file }}
+        echo "New ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }} with:" >> ${{ inputs.release_file }}
+        git add ${{ inputs.release_file }}
       shell: bash
 
     - name: Create PR ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
@@ -97,8 +97,8 @@ runs:
       run: |
         git checkout ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
         git branch -l
-        echo " Phase PREPARE" >> ${{ env.release_file }}
-        git add ${{ env.release_file }}
+        echo " Phase PREPARE" >> ${{ inputs.release_file }}
+        git add ${{ inputs.release_file }}
         git commit -m "PREPARE ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
       shell: bash
 
@@ -107,8 +107,8 @@ runs:
       run: |
         git checkout ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
         git branch -l
-        echo " Phase PEFORM" >> ${{ env.release_file }}
-        git add ${{ env.release_file }}
+        echo " Phase PEFORM" >> ${{ inputs.release_file }}
+        git add ${{ inputs.release_file }}
         git commit -m "PERFORM ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
       shell: bash
 
@@ -117,17 +117,17 @@ runs:
       run: |
         git checkout ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
         git branch -l
-        echo " - Base Branch              - ${{ inputs.baseBranch }}" >> ${{ env.release_file }}
-        echo " - Target Branch            - ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"  >> ${{ env.release_file }}
-        echo " - Release Version          - ${{ inputs.releaseVersion }}"  >> ${{ env.release_file }}
-        echo " - Development Version      - ${{ inputs.developmentVersion }}"  >> ${{ env.release_file }}
-        echo " - Pull Request URL         - ${{ steps.create-release-pr.outputs.pull-request-url }}" >> ${{ env.release_file }}
-        echo " - Pull Request operation   - ${{ steps.create-release-pr.outputs.pull-request-operation }}" >> ${{ env.release_file }}
-        echo " - Pull Request Commit SHA  - ${{ steps.create-release-pr.outputs.pull-request-head-sha }}" >> ${{ env.release_file }}
-        echo " - Tag:                     - https://github.com/radiomix/gh-composite-action/releases/tag/${{ env.artifact-id }}-${{ inputs.releaseVersion }}" >> ${{ env.release_file }}
-        echo " - Time                     - $(date -u )" >> ${{ env.release_file }}
-        echo " -------------------------- " >> ${{ env.release_file }}
-        git add ${{ env.release_file }}
+        echo " - Base Branch              - ${{ inputs.baseBranch }}" >> ${{ inputs.release_file }}
+        echo " - Target Branch            - ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"  >> ${{ inputs.release_file }}
+        echo " - Release Version          - ${{ inputs.releaseVersion }}"  >> ${{ inputs.release_file }}
+        echo " - Development Version      - ${{ inputs.developmentVersion }}"  >> ${{ inputs.release_file }}
+        echo " - Pull Request URL         - ${{ steps.create-release-pr.outputs.pull-request-url }}" >> ${{ inputs.release_file }}
+        echo " - Pull Request operation   - ${{ steps.create-release-pr.outputs.pull-request-operation }}" >> ${{ inputs.release_file }}
+        echo " - Pull Request Commit SHA  - ${{ steps.create-release-pr.outputs.pull-request-head-sha }}" >> ${{ inputs.release_file }}
+        echo " - Tag:                     - https://github.com/radiomix/gh-composite-action/releases/tag/${{ env.artifact-id }}-${{ inputs.releaseVersion }}" >> ${{ inputs.release_file }}
+        echo " - Time                     - $(date -u )" >> ${{ inputs.release_file }}
+        echo " -------------------------- " >> ${{ inputs.release_file }}
+        git add ${{ inputs.release_file }}
         git commit -m "Finish ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
         git push -u origin ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
       shell: bash
