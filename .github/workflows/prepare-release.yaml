@@ -1,0 +1,50 @@
+## Prepare a release, run release on merge
+#
+name: Prepare release PR
+
+on:
+  push:
+    paths:
+    - '.github/workflows/prepare-release.yaml'
+
+jobs:
+  prepare-release:
+    runs-on: ubuntu-latest
+    permissions:
+    # Explicit permissions needed for peter-evans/create-pull-request
+      pull-requests: write
+      contents: write
+    env:
+      ###############################################
+      ## START: CHANGE VALUES TO RELEASE
+      baseBranch: 'develop'
+      releaseVersion: '14.0.0'
+      developmentVersion: '14.0.1.0-SNAPSHOT'
+      artifact-id: myCompany-artifact # GAV value!
+      ## END: CHANGE VALUES TO RELEASE
+      ###############################################
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Show Release Preparations
+        id: show-release-preparation
+        run: |
+          echo " ** PREPARING TO RUNNING RELEASE WITH:
+          baseBranch: ${{ env.baseBranch }}
+          releasePrefix: ${{ env.artifact-id }}
+          releaseVersion: ${{ env.releaseVersion }}
+          developmentVersion: ${{ env.developmentVersion }}
+          "
+        shell: bash
+
+      - name: Run Release
+        if: github.event.pull_request.merged == true
+        id: run-release
+        uses: ./.github/actions/run-release
+        with:
+          ## Adjust these values for the release
+          baseBranch: ${{ env.baseBranch }}
+          releasePrefix: ${{ env.artifact-id }}
+          releaseVersion: ${{ env.releaseVersion }}
+          developmentVersion: ${{ env.developmentVersion }}
+
