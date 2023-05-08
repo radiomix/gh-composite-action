@@ -38,8 +38,7 @@ jobs:
           developmentVersion: ${{ env.developmentVersion }}
           "
           echo "****************************"
-          GITHUB_CONTEXT=${{ toJson(github) }}
-          echo "$GITHUB_CONTEXT"
+          echo '${{ toJSON(github) }}'
           echo "****************************"
         shell: bash
 
