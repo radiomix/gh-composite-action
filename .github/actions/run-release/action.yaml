@@ -41,6 +41,20 @@ runs:
         git branch -l
       shell: bash
 
+    # Prepare git and ensure peter-evans/create-pull-request creates a new PR
+    - name: Prepare PR ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
+      id: setup-git
+      run: |
+        ### git checkout ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
+        git config --global user.email "GithubAction@support.eyefreight.com"
+        git config --global user.name " Github Actions"
+        echo "****** git config -l --global *******"
+        git config -l --global
+        git branch -l
+        echo "" >> releases.txt
+        echo "New ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }} with:" >> releases.txt
+        git add releases.txt
+      shell: bash
 
     - name: Create PR ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
       # See https://github.com/peter-evans/create-pull-request
@@ -74,21 +88,6 @@ runs:
           - [ ] Teams Channel:
           - [ ] Slack Channel:
         labels: ${{ inputs.releasePrefix }}
-
-    # Prepare git and ensure peter-evans/create-pull-request creates a new PR
-    - name: Prepare ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
-      id: setup-git
-      run: |
-        git checkout ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
-        git config --global user.email "GithubAction@support.eyefreight.com"
-        git config --global user.name " Github Actions"
-        echo "****** git config -l --global *******"
-        git config -l --global
-        git branch -l
-        echo "" >> releases.txt
-        echo "New ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }} with:" >> releases.txt
-        git add releases.txt
-      shell: bash
 
     - name: Release:Prepare ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
       id: prepare-release
