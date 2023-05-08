@@ -20,7 +20,7 @@ jobs:
     env:
       ###############################################
       ## START: CHANGE VALUES TO RELEASE
-      baseBranch: 'develop'
+      baseBranch: 'main'
       releaseVersion: '14.0.0'
       developmentVersion: '14.0.1.0-SNAPSHOT'
       artifact-id: myCompany-artifact # GAV value!
