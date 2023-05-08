@@ -4,6 +4,8 @@ name: Prepare release PR
 
 on:
   push:
+    branches:
+      - main
     paths:
     - '.github/workflows/prepare-release.yaml'
 
