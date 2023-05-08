@@ -21,9 +21,6 @@ inputs:
     description: 'Development version: (like x.y.z.0-SNAPSHOT).'
     required: true
     default: ''
-  msteams__github_webook:
-    description: 'Teams web-hook secret'
-    required: true
   release_file:
     description: 'File to note recent releases to.'
     default: 'releases.txt'
@@ -69,7 +66,7 @@ runs:
         # Branch name for of the PR to create
         branch: "${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
         title: "${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
-        commit-message: Start release ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
+        commit-message: Start ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
         reviewers: radiomix
         body: |
           ## Release `${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}`
