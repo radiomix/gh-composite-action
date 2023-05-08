@@ -42,7 +42,7 @@ runs:
       shell: bash
 
 
-    - name: Start ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
+    - name: Create PR ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
       # See https://github.com/peter-evans/create-pull-request
       uses: peter-evans/create-pull-request@v5
       id: create-release-pr
@@ -79,6 +79,7 @@ runs:
     - name: Prepare ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
       id: setup-git
       run: |
+        git checkout ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
         git config --global user.email "GithubAction@support.eyefreight.com"
         git config --global user.name " Github Actions"
         echo "****** git config -l --global *******"
@@ -92,6 +93,7 @@ runs:
     - name: Release:Prepare ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
       id: prepare-release
       run: |
+        git checkout ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
         git branch -l
         echo " Phase PREPARE" >> release.txt
         git add release.txt
@@ -101,6 +103,7 @@ runs:
     - name: Release:Perform ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
       id: perform-release
       run: |
+        git checkout ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
         git branch -l
         echo " Phase PEFORM" >> release.txt
         git add release.txt
@@ -110,6 +113,7 @@ runs:
     - name: Finish ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
       id: write-release-values
       run: |
+        git checkout ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
         git branch -l
         echo " - Base Branch              - ${{ inputs.baseBranch }}" >> releases.txt
         echo " - Target Branch            - ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"  >> releases.txt
