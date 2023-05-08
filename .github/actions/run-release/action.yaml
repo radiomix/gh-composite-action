@@ -24,7 +24,9 @@ inputs:
   msteams__github_webook:
     description: 'Teams web-hook secret'
     required: true
-  release_file: releases.txt
+  release_file:
+    description: 'File to note recent releases to.'
+    default: 'releases.txt'
 
 runs:
   using: composite
