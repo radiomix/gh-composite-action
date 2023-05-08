@@ -53,46 +53,6 @@ runs:
         git add releases.txt
       shell: bash
 
-    - name: Start ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
-      # See https://github.com/peter-evans/create-pull-request
-      uses: peter-evans/create-pull-request@v5
-      id: create-release-pr
-      with:
-        # Default repo-branch to branch off this PR
-        base: ${{ inputs.baseBranch }}
-        # Branch name for of the PR to create
-        branch: "${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
-        title: "${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
-        commit-message: Start release ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
-        reviewers: radiomix
-        body: |
-          ## Release `${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}`
-          - Release version: `${{ inputs.releaseVersion }}`
-          - Development version: `${{ inputs.developmentVersion }}`
-          - Tag: [${{ env.artifact-id }}-${{ inputs.releaseVersion }}](https://github.com/radiomix/gh-composite-action/releases/tag/${{ env.artifact-id }}-${{ inputs.releaseVersion }})
-          - Nexus: [Nexus version ${{ inputs.releaseVersion }}](https://nexus.eyedev.io/#browse/search/custom=version%3D${{ inputs.releaseVersion }})
-          - itude-logistics-app: [${{ inputs.releaseVersion }}](https://nexus.eyedev.io/repository/ef-releases/com/eyefreight/tms/itude-logistics-app/${{ inputs.releaseVersion }}/itude-logistics-app-${{ inputs.releaseVersion }}.war)
-          - itude-logistics-eyefreight-daemon: [${{ inputs.releaseVersion }}](https://nexus.eyedev.io/repository/ef-releases/com/eyefreight/tms/itude-logistics-eyefreight-daemon/${{ inputs.releaseVersion }}/itude-logistics-eyefreight-daemon-${{ inputs.releaseVersion }}.war)
-          -------------
-
-          - [ ] Change log has been added
-          - [ ] New feature are described
-          - [ ] Breaking change are described
-          - [ ] Documentation has been update
-
-          -------------
-
-          - [ ] previous/related PR:
-          - [ ] Jira Card:
-          - [ ] Teams Channel:
-          - [ ] Slack Channel:
-        labels: ${{ inputs.releasePrefix }}
-
-
-    ###################################################
-    # Now in branch ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }} #
-    ###################################################
-
     - name: Release:Prepare ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
       id: prepare-release
       run: |
@@ -127,3 +87,37 @@ runs:
         git push -u origin ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
       shell: bash
 
+    - name: Start ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
+      # See https://github.com/peter-evans/create-pull-request
+      uses: peter-evans/create-pull-request@v5
+      id: create-release-pr
+      with:
+        # Default repo-branch to branch off this PR
+        base: ${{ inputs.baseBranch }}
+        # Branch name for of the PR to create
+        branch: "${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
+        title: "${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
+        commit-message: Start release ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
+        reviewers: radiomix
+        body: |
+          ## Release `${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}`
+          - Release version: `${{ inputs.releaseVersion }}`
+          - Development version: `${{ inputs.developmentVersion }}`
+          - Tag: [${{ env.artifact-id }}-${{ inputs.releaseVersion }}](https://github.com/radiomix/gh-composite-action/releases/tag/${{ env.artifact-id }}-${{ inputs.releaseVersion }})
+          - Nexus: [Nexus version ${{ inputs.releaseVersion }}](https://nexus.eyedev.io/#browse/search/custom=version%3D${{ inputs.releaseVersion }})
+          - itude-logistics-app: [${{ inputs.releaseVersion }}](https://nexus.eyedev.io/repository/ef-releases/com/eyefreight/tms/itude-logistics-app/${{ inputs.releaseVersion }}/itude-logistics-app-${{ inputs.releaseVersion }}.war)
+          - itude-logistics-eyefreight-daemon: [${{ inputs.releaseVersion }}](https://nexus.eyedev.io/repository/ef-releases/com/eyefreight/tms/itude-logistics-eyefreight-daemon/${{ inputs.releaseVersion }}/itude-logistics-eyefreight-daemon-${{ inputs.releaseVersion }}.war)
+          -------------
+
+          - [ ] Change log has been added
+          - [ ] New feature are described
+          - [ ] Breaking change are described
+          - [ ] Documentation has been update
+
+          -------------
+
+          - [ ] previous/related PR:
+          - [ ] Jira Card:
+          - [ ] Teams Channel:
+          - [ ] Slack Channel:
+        labels: ${{ inputs.releasePrefix }}
