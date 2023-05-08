@@ -53,4 +53,3 @@ jobs:
           releasePrefix: ${{ env.artifact-id }}
           releaseVersion: ${{ env.releaseVersion }}
           developmentVersion: ${{ env.developmentVersion }}
-
