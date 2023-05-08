@@ -55,7 +55,7 @@ runs:
 
     - name: Start ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
       # See https://github.com/peter-evans/create-pull-request
-      uses: peter-evans/create-pull-request@5
+      uses: peter-evans/create-pull-request@v5
       id: create-release-pr
       with:
         # Default repo-branch to branch off this PR
