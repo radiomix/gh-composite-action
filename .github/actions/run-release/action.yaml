@@ -53,6 +53,40 @@ runs:
         git add releases.txt
       shell: bash
 
+    - name: Release:Prepare ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
+      id: prepare-release
+      run: |
+        echo " Phase PREPARE" >> release.txt
+        git add release.txt
+        git commit -m "PREPARE ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
+      shell: bash
+
+    - name: Release:Perform ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
+      id: perform-release
+      run: |
+        echo " Phase PEFORM" >> release.txt
+        git add release.txt
+        git commit -m "PERFORM ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
+      shell: bash
+
+    - name: Finish ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
+      id: write-release-values
+      run: |
+        echo " - Base Branch              - ${{ inputs.baseBranch }}" >> releases.txt
+        echo " - Target Branch            - ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"  >> releases.txt
+        echo " - Release Version          - ${{ inputs.releaseVersion }}"  >> releases.txt
+        echo " - Development Version      - ${{ inputs.developmentVersion }}"  >> releases.txt
+        echo " - Pull Request URL         - ${{ steps.create-release-pr.outputs.pull-request-url }}" >> releases.txt
+        echo " - Pull Request operation   - ${{ steps.create-release-pr.outputs.pull-request-operation }}" >> releases.txt
+        echo " - Pull Request Commit SHA  - ${{ steps.create-release-pr.outputs.pull-request-head-sha }}" >> releases.txt
+        echo " - Tag:                     - https://github.com/radiomix/gh-composite-action/releases/tag/${{ env.artifact-id }}-${{ inputs.releaseVersion }}" >> releases.txt
+        echo " - Time                     - $(date -u )" >> releases.txt
+        echo " -------------------------- " >> releases.txt
+        git add releases.txt
+        git commit -m "Finish ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
+        git push -u origin ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
+      shell: bash
+
     - name: Start ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
       # See https://github.com/peter-evans/create-pull-request
       uses: peter-evans/create-pull-request@v5
@@ -87,61 +121,3 @@ runs:
           - [ ] Teams Channel:
           - [ ] Slack Channel:
         labels: ${{ inputs.releasePrefix }}
-
-
-    ###################################################
-    # Now in branch ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }} #
-    ###################################################
-
-    - name: Maven Release:Prepare ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
-      id: prepare-release
-      run: |
-        echo -e " *** Prepare release ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }} with:
-        mvn -B release:clean release:prepare \\
-        -DreleaseVersion=${{ inputs.releaseVersion }} \\
-        -DdevelopmentVersion=${{ inputs.developmentVersion }} \\
-        -Dtag=${{ env.artifact-id }}-${{ inputs.releaseVersion }}"
-
-        echo " Phase PREPARE" >> release.txt
-        git add release.txt
-        git commit -m "PREPARE ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
-
-      shell: bash
-
-    - name: Maven Release:Perform ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
-      id: perform-release
-      run: |
-        echo -e " *** Perform release ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }} with:
-        mvn -B release:perform \\
-        -P less,npm,docker \\
-        -Ddocker.imagePropertyConfiguration=override \\
-        -Ddocker.tags.1=latest"
-
-        echo " Phase PEFORM" >> release.txt
-        git add release.txt
-        git commit -m "PERFORM ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
-
-        # mvn -B release:perform \
-        # -P less,npm,docker \
-        # -Ddocker.imagePropertyConfiguration=override \
-        # -Ddocker.tags.1=latest
-      shell: bash
-
-    - name: Finish ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
-      id: write-release-values
-      run: |
-        echo " - Base Branch              - ${{ inputs.baseBranch }}" >> releases.txt
-        echo " - Target Branch            - ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"  >> releases.txt
-        echo " - Release Version          - ${{ inputs.releaseVersion }}"  >> releases.txt
-        echo " - Development Version      - ${{ inputs.developmentVersion }}"  >> releases.txt
-        echo " - Pull Request URL         - ${{ steps.create-release-pr.outputs.pull-request-url }}" >> releases.txt
-        echo " - Pull Request operation   - ${{ steps.create-release-pr.outputs.pull-request-operation }}" >> releases.txt
-        echo " - Pull Request Commit SHA  - ${{ steps.create-release-pr.outputs.pull-request-head-sha }}" >> releases.txt
-        echo " - Tag:                     - https://github.com/radiomix/gh-composite-action/releases/tag/${{ env.artifact-id }}-${{ inputs.releaseVersion }}" >> releases.txt
-        echo " - Time                     - $(date -u )" >> releases.txt
-        echo " -------------------------- " >> releases.txt
-        git add releases.txt
-        git commit -m "Finish ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}"
-        git push -u origin ${{ inputs.releasePrefix }}/${{ inputs.releaseVersion }}
-      shell: bash
-
