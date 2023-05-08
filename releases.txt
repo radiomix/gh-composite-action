@@ -130,3 +130,13 @@ Release PR release-1.2.3 with:
 New myCompany-artifact/14.0.0 with:
 
 New myCompany-artifact/14.0.0 with:
+ - Base Branch              - main
+ - Target Branch            - myCompany-artifact/14.0.0
+ - Release Version          - 14.0.0
+ - Development Version      - 14.0.1.0-SNAPSHOT
+ - Pull Request URL         - 
+ - Pull Request operation   - 
+ - Pull Request Commit SHA  - 
+ - Tag:                     - https://github.com/radiomix/gh-composite-action/releases/tag/myCompany-artifact-14.0.0
+ - Time                     - Mon May  8 12:22:46 UTC 2023
+ -------------------------- 
