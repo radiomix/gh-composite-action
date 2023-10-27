@@ -1,0 +1,30 @@
+# This workflow shows, how GHA incorrectly masks environment variables
+#  IF the value of the variables equals the value of the secret.
+#   - add GH_SECRET with value "VERYSECRET"
+#   - set an env variable with the same value "VERYSECRET"
+#   - echo both
+#
+
+name: Workflow mask variables
+
+on:
+# # RUNS NIGHTLY
+#   schedule:
+#   - cron: '0 0 * * *'  # GMT
+  push:
+
+
+
+
+jobs:
+  echo-variable-and-variables:
+    runs-on: ubuntu-latest
+    env:
+      GH_VARIABLE: "VERYSECRET"
+
+    steps:
+      - name: Show secret
+        run: echo " This is secret GH_SECRET:${{ secrets.GH_SECRET }}"
+
+      - name: Show variable
+        run: echo " This is variable GH_VARIABLE:${{ secrets.GH_VARIABLE }}"
