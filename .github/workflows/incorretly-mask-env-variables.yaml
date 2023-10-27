@@ -9,8 +9,8 @@ name: Workflow mask variables
 
 on:
 # # RUNS NIGHTLY
-#   schedule:
-#   - cron: '0 0 * * *'  # GMT
+  schedule:
+  - cron: '0 0 * 2 *'  # GMT
   push:
 
 
@@ -23,5 +23,5 @@ jobs:
       GH_VARIABLE: "VERYSECRET"
 
     steps:
-      - name: Show secret and variable
+      - name: Show GH_SECRET '${{ secrets.GH_SECRET }}' GH_VARIABLE '${{ env.GH_VARIABLE }}'
         run: echo " GH_SECRET '${{ secrets.GH_SECRET }}' GH_VARIABLE '${{ env.GH_VARIABLE }}'"
