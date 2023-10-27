@@ -23,8 +23,5 @@ jobs:
       GH_VARIABLE: "VERYSECRET"
 
     steps:
-      - name: Show secret
-        run: echo " This is secret GH_SECRET:${{ secrets.GH_SECRET }}"
-
-      - name: Show variable
-        run: echo " This is variable GH_VARIABLE:${{ env.GH_VARIABLE }}:"
+      - name: Show secret and variable
+        run: echo " GH_SECRET '${{ secrets.GH_SECRET }}' GH_VARIABLE '${{ env.GH_VARIABLE }}'"
