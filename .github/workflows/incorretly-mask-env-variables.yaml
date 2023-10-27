@@ -27,4 +27,4 @@ jobs:
         run: echo " This is secret GH_SECRET:${{ secrets.GH_SECRET }}"
 
       - name: Show variable
-        run: echo " This is variable GH_VARIABLE:${{ env.GH_VARIABLE }}"
+        run: echo " This is variable GH_VARIABLE:${{ env.GH_VARIABLE }}:"
