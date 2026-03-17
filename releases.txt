@@ -142,3 +142,5 @@ New myCompany-artifact/14.0.0 with:
  - Tag:                     - https://github.com/radiomix/gh-composite-action/releases/tag/myCompany-artifact-14.0.0
  - Time                     - Mon May  8 12:42:37 UTC 2023
  -------------------------- 
+
+Release PR release-1.2.3 with:
