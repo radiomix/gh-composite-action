@@ -17,7 +17,7 @@ jobs:
 
       - name: ✂ Cleaup Pruner Runs
         # https://github.community/t/delete-old-workflow-results/16152/44
-        uses: actions/github-script@v5
+        uses: actions/github-script@v9
         # https://github.com/actions/github-script
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}

@@ -22,7 +22,7 @@ jobs:
     steps:
     - name: Get PR SHA
       id: sha
-      uses: actions/github-script@v4
+      uses: actions/github-script@v9
       with:
         result-encoding: string
         script: |
@@ -39,7 +39,7 @@ jobs:
         ref: ${{ steps.sha.outputs.result }}
 
     - name: React to comment
-      uses: actions/github-script@v4
+      uses: actions/github-script@v9
       with:
         script: |
           const {owner, repo} = context.issue;
@@ -59,7 +59,7 @@ jobs:
 
     - name: Message success
       if: ${{ success() }}
-      uses: actions/github-script@v4
+      uses: actions/github-script@v9
       with:
         script: |
           const {owner, repo} = context.issue;
@@ -78,7 +78,7 @@ jobs:
 
     - name: Message failure
       if: ${{ failure() }}
-      uses: actions/github-script@v4
+      uses: actions/github-script@v9
       with:
         script: |
           const {owner, repo} = context.issue;
