@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Check out code using git
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
 
       - name: ✂ Cleaup Pruner Runs
         # https://github.community/t/delete-old-workflow-results/16152/44

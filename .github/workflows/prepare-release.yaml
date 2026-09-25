@@ -28,7 +28,7 @@ jobs:
       ###############################################
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - name: Show Release Preparations
         id: show-release-preparation
         run: |

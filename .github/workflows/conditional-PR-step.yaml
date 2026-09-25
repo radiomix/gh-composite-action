@@ -22,7 +22,7 @@ jobs:
       baseBranch: 'main'
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
 
       # Prepare git and ensure peter-evans/create-pull-request creates a new PR
       - name: Prepare PR ${{ env.releasePrefix }}-${{ env.releaseVersion }}
