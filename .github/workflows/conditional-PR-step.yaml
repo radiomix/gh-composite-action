@@ -42,7 +42,7 @@ jobs:
         # See https://github.com/peter-evans/create-pull-request
         # DONT run on merge
         if: github.event.pull_request.merged == false
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v8
         id: create-release-pr
         with:
           # Branch name for of the PR to create
